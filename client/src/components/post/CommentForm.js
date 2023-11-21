@@ -1,44 +1,34 @@
-import React, { useState } from 'react';
+import React , {useState} from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { addComment } from '../../actions/post';
+import { addCommentPost } from '../../actions/post';
 
-const CommentForm = ({ postId, addComment }) => {
-  const [text, setText] = useState('');
-
-  return (
-    <div className='post-form'>
-      <div className='bg-primary p'>
-        <h3>Leave a Comment</h3>
-      </div>
-      <form
-        className='form my-1'
-        onSubmit={e => {
-          e.preventDefault();
-          addComment(postId, { text });
-          setText('');
+const CommentForm = ({ postId, addCommentPost }) => {
+    const [text, setText] = useState('');
+    
+    function refreshPage() {
+    window.location.reload(false);
+    }
+    return (
+        <form onSubmit={e => {
+            e.preventDefault();
+            addCommentPost(postId, {text});
+            setText('');
         }}
-      >
-        <textarea
-          name='text'
-          cols='30'
-          rows='5'
-          placeholder='Comment the post'
-          value={text}
-          onChange={e => setText(e.target.value)}
-          required
-        />
-        <input type='submit' className='btn btn-dark my-1' value='Submit' />
-      </form>
-    </div>
-  );
-};
+        >
+        <div className="add-comment">
+            <p className="comment-prompt">Add a comment...</p>
+            <div className="comment-form">
+                <textarea name="comment" className="comment-form-details" cols="125" rows="2" value={text} onChange={e => setText(e.target.value)} required></textarea>
+                <button id="post-form-button" className="comment-submit-btn" type="submit" onClick={refreshPage}>Comment!</button>
+            </div>
+        </div>
+        </form>
+    )
+}
 
 CommentForm.propTypes = {
-  addComment: PropTypes.func.isRequired
-};
+    addCommentPost: PropTypes.func.isRequired
+}
 
-export default connect(
-  null,
-  { addComment }
-)(CommentForm);
+export default connect(null, {addCommentPost})(CommentForm);

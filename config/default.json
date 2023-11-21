@@ -1,0 +1,4 @@
+{
+    "mongoURI": "mongodb+srv://EngageConcordia_Admin:SOEN357_admin!@atlascluster.zbmdgpg.mongodb.net/?retryWrites=true&w=majority",
+    "jwtSecret": "token"
+}
