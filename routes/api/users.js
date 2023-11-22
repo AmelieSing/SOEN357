@@ -13,7 +13,7 @@ const User = require('../../modules/User');
 router.post('/', [
     check('name', 'Name is required').not().isEmpty(),
     check('email', 'Please include a valid email').isEmail(),
-    check('password', 'Please enter a valid passwordof 8 or more caracters').isLength({ min: 8 })],
+    check('password', 'Please enter a valid password of 8 or more caracters').isLength({ min: 8 })],
     async (req, res) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) //returns an error is any of the three above fields (name, email, password) are empty or wrongly formated according to the rules defined in the User.js file in modules.

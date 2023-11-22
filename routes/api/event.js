@@ -3,8 +3,8 @@ const express = require('express');
 const router = express.Router();
 const { check, validationResult } = require('express-validator');
 const auth = require('../../middleware/auth');
-const Event = require('../../models/Event');
-const EventAttendance = require('../../models/EventAttendance');
+const Event = require('../../modules/Event');
+const EventAttendance = require('../../modules/EventAttendance');
 const nodemailer = require('nodemailer');       //this is for sending emails to a user when they are invited to an event
 
 
