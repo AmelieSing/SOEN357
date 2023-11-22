@@ -3,10 +3,10 @@ const express = require('express');
 const router = express.Router();
 const { check, validationResult } = require('express-validator');
 const auth = require('../../middleware/auth');
-const Event = require('../../modules/Event');
+const Event = require('../../modules/CalendarEvent');
 const EventAttendance = require('../../modules/EventAttendance');
 const nodemailer = require('nodemailer');       //this is for sending emails to a user when they are invited to an event
-
+const User = require('../../modules/User');
 
 // @route       POST api/events
 // @description Create a new event
@@ -64,42 +64,57 @@ router.get('/', auth, async (req, res) => {
 // @access      Private
 router.post('/:eventId/interest', auth, async (req, res) => {
     try {
-      const { status } = req.body;
-      const validStatuses = ['going', 'not_going', 'interested'];
-  
-      if (!validStatuses.includes(status)) {
-        return res.status(400).json({ msg: 'Invalid status' });
-      }
-  
-      const event = await Event.findById(req.params.eventId);
-  
-      if (!event) {
-        return res.status(404).json({ msg: 'Event not found' });
-      }
-  
-      // Check if the user has already expressed interest in this event
-      let attendance = await EventAttendance.findOne({
-        user: req.user.id,
-        event: event.id,
-      });
-  
-      if (!attendance) {
-        // Create a new attendance record
-        attendance = new EventAttendance({
-          user: req.user.id,
-          event: event.id,
+        const { status } = req.body;
+        const validStatuses = ['going', 'not_going', 'interested'];
+
+        if (!validStatuses.includes(status)) {
+            return res.status(400).json({ msg: 'Invalid status' });
+        }
+
+        const eventId = req.params.eventId;
+        const userId = req.user.id;
+
+        // Check if the user has already expressed interest in this event
+        let attendance = await EventAttendance.findOne({
+            user: userId,
+            event: eventId,
         });
-      }
-  
-      attendance.status = status;
-      await attendance.save();
-  
-      res.json(attendance);
+
+        if (!attendance) {
+            // Create a new attendance record
+            attendance = new EventAttendance({
+                user: userId,
+                event: eventId,
+            });
+        }
+
+        attendance.status = status;
+        await attendance.save();
+
+        // Update the attendees array in the Event model
+        await Event.findByIdAndUpdate(
+            eventId,
+            {
+                $addToSet: { // Add the user to the attendees array if not already present
+                    attendees: { user: userId, status: status },
+                },
+            },
+            { new: true } // Return the updated document
+        )
+        .populate('attendees.user', 'name') // Populate the attendees array with user details
+        .exec(function (err, updatedEvent) {
+            if (err) {
+                console.error(err.message);
+                return res.status(500).send('Server Error');
+            }
+
+            res.json(updatedEvent);
+        });
     } catch (err) {
-      console.error(err.message);
-      res.status(500).send('Server Error');
+        console.error(err.message);
+        res.status(500).send('Server Error');
     }
-  });
+});
   
   // @route       POST api/events/:eventId/share
 // @description Share an event via email

@@ -3,11 +3,11 @@ const mongoose = require('mongoose');
 
 const EventAttendanceSchema = new mongoose.Schema({
   user: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: mongoose.Schema.Types.ObjectId,  // Corrected type
     ref: 'user', // Reference to the User model
   },
   event: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: mongoose.Schema.Types.ObjectId,  // Corrected type
     ref: 'event', // Reference to the Event model
   },
   status: {
@@ -21,4 +21,4 @@ const EventAttendanceSchema = new mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model('eventAttendance', EventAttendanceSchema);
+module.exports = EventAttendance =mongoose.model('eventAttendance', EventAttendanceSchema);
