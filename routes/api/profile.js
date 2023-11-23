@@ -33,9 +33,6 @@ router.post('/', [auth, [
     check('bio', 'Bio is required')
         .not()
         .isEmpty(),
-    check('University', 'University is required')
-        .not()
-        .isEmpty(),
     check('Field', 'Field is required')
         .not()
         .isEmpty()
@@ -47,7 +44,6 @@ router.post('/', [auth, [
     }
     const {
         bio,
-        githubname,
         University,
         Field
     } = req.body;
@@ -55,7 +51,6 @@ router.post('/', [auth, [
     const profileFields = {};
     profileFields.user = req.user.id;
     if (bio) profileFields.bio = bio;
-    if (githubname) profileFields.githubname = githubname;
     if (University) profileFields.University = University;
     if (Field) profileFields.Field = Field;
 
@@ -139,64 +134,91 @@ router.delete('/', auth, async (req, res) => {
 
 
 
-// @route       GET api/profile/:id/:user_id
-// @description get User posts by IDs and show that in Profile
-// @access      Private         
+// // @route       GET api/profile/:id/:user_id
+// // @description get User posts by IDs and show that in Profile
+// // @access      Private         
 
-router.get('/Posts/:user_id', auth,async (req, res) => {
+// router.get('/Posts/:user_id', auth,async (req, res) => {
 
-    try {
+//     try {
         
-        const user = await User.findById(req.user.id).select('-password');
+//         const user = await User.findById(req.user.id).select('-password');
         
     
-        const profile = await Profile.findOne({
-            user: req.params.user_id
-        });
+//         const profile = await Profile.findOne({
+//             user: req.params.user_id
+//         });
     
-        const feeds = await Feed.find({
-            user: user._id,    // <-- this is what i changed
+//         const feeds = await Feed.find({
+//             user: user._id,    // <-- this is what i changed
             
 
-        })
+//         })
     
+//         const payload = {
+//             ...profile.toJSON(),
+//             Posts: feeds.map(feed => feed.toJSON())
+//         }
+//                     //it is not saved here since we would be duplicating information. This is just retreiving information based on parameters and can be called upon any time 
+//         res.json(payload);
+//     }
+
+
+
+
+
+
+
+
+//     catch (err) {
+//         console.error(err.message);
+
+
+//         if (err.kind === 'ObjectId') {
+//             return res.status(404).json({ msg: 'Post not found' });
+//         }
+
+
+//         res.status(500).send('Server Error');
+//     }
+// });
+
+// @route       GET api/profile/CalendarEvent/:user_id
+// @description Get user-created and shared events for a user's profile
+// @access      Private
+router.get('/CalendarEvent', auth, async (req, res) => {
+    try {
+        const user = await User.findById(req.user.id).select('-password');
+        const profile = await Profile.findOne({
+            user: req.user.id
+        });
+
+        // Get user-created events
+        const userEvents = await CalendarEvent.find({
+            user: user._id
+        });
+
+        // Get events shared with the user
+        const sharedEvents = await CalendarEvent.find({
+            sharedWith: user._id
+        });
+
         const payload = {
             ...profile.toJSON(),
-            Posts: feeds.map(feed => feed.toJSON())
-        }
-                    //it is not saved here since we would be duplicating information. This is just retreiving information based on parameters and can be called upon any time 
+            UserCreatedEvents: userEvents.map(event => event.toJSON()),
+            SharedEvents: sharedEvents.map(event => event.toJSON())
+        };
+
         res.json(payload);
-    }
-
-
-
-
-
-
-
-
-    catch (err) {
+    } catch (err) {
         console.error(err.message);
 
-
         if (err.kind === 'ObjectId') {
-            return res.status(404).json({ msg: 'Post not found' });
+            return res.status(404).json({ msg: 'Profile not found' });
         }
-
 
         res.status(500).send('Server Error');
     }
 });
-
-
-
-
-
-
-
-
-
-
-
 module.exports = router;
 
