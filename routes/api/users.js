@@ -47,7 +47,7 @@ router.post('/', [
                 res.json({ token });
             });
 
-
+            //this will be replaced with load calendar and events
             const loadPosts = (user) => {
                 listByUser({
                     userId: user

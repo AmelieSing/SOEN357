@@ -28,23 +28,30 @@ router.post(
     try {
       const { title, start, end, description } = req.body;
 
+      // Create a new event
       const newEvent = new Event({
-        title,
-        start,
-        end,
-        description,
-        user: req.user.id, // Assuming you have implemented user authentication
+          title,
+          start,
+          end,
+          description,
+          user: req.user.id,
       });
 
       const event = await newEvent.save();
 
+      // Update UserCreatedEvents in the user's profile
+      await Profile.findOneAndUpdate(
+          { user: req.user.id },
+          { $push: { UserCreatedEvents: event.id } },
+          { new: true }
+      );
+
       res.json(event);
-    } catch (err) {
+  } catch (err) {
       console.error(err.message);
       res.status(500).send('Server Error');
-    }
   }
-);
+});
 
 // @route       GET api/events
 // @description Get all events for the authenticated user
@@ -116,66 +123,57 @@ router.post('/:eventId/interest', auth, async (req, res) => {
     }
 });
   
-  // @route       POST api/events/:eventId/share
-// @description Share an event via email
+// @route       POST api/events/:eventId/share
+// @description Share an event within the app with specific users by name
 // @access      Private
-//to run this service you must install nodemailer via this in the terminal: npm install nodemailer
 router.post('/:eventId/share', auth, async (req, res) => {
-    try {
+  try {
       const event = await Event.findById(req.params.eventId).populate('user', 'email');
-  
+
       if (!event) {
-        return res.status(404).json({ msg: 'Event not found' });
+          return res.status(404).json({ msg: 'Event not found' });
       }
-  
-      // Construct the email content
-      const emailContent = `
-        Hi,
-  
-        ${req.user.name} would like to share an event with you:
-  
-        Event Title: ${event.title}
-        Start Time: ${event.start}
-        End Time: ${event.end}
-        Description: ${event.description || 'No description available'}
-  
-        You can find more details on the app.
-  
-        EngageConcordia
-      `;
-  
-      // Set up nodemailer transporter
-      const transporter = nodemailer.createTransport({
-        service: 'gmail',
-        auth: {
-          user: 'your_email@gmail.com', // Replace with your Gmail email address
-          pass: 'your_password', // Replace with your Gmail password or an app-specific password
-        },
-      });
-  
-      // Define the email options
-      const mailOptions = {
-        from: 'your_email@gmail.com', // Replace with your Gmail email address
-        to: event.user.email,
-        subject: `Event Sharing: ${event.title}`,
-        text: emailContent,
-      };
-  
-      // Send the email
-      transporter.sendMail(mailOptions, (error, info) => {
-        if (error) {
-          console.error(error);
-          return res.status(500).json({ msg: 'Error sending email' });
-        }
-        console.log('Email sent: ' + info.response);
-        res.json({ msg: 'Event shared successfully' });
-      });
-    } catch (err) {
+
+      // Check if the event is already shared with the user
+      const alreadyShared = event.sharedWith.some(userId => userId.toString() === req.user.id);
+      if (alreadyShared) {
+          return res.status(400).json({ msg: 'Event already shared with this user' });
+      }
+
+      // Get the array of user names to share the event with
+      const { shareWithUserNames } = req.body;
+
+      // Assuming you have a sharedWith array in your Event model
+      if (!event.sharedWith) {
+          event.sharedWith = [];
+      }
+
+      // Iterate through the array of user names and find their corresponding user IDs
+      const userIdsToShareWith = [];
+      for (const userName of shareWithUserNames) {
+          const user = await User.findOne({ name: userName });
+          if (user) {
+              userIdsToShareWith.push(user.id);
+
+              // Update SharedEvents in the user's profile
+              await Profile.findOneAndUpdate(
+                  { user: user.id },
+                  { $push: { SharedEvents: event.id } },
+                  { new: true }
+              );
+          }
+      }
+
+      // Add the user IDs to the sharedWith array
+      event.sharedWith = [...event.sharedWith, ...userIdsToShareWith];
+
+      // Save the updated event
+      await event.save();
+
+      res.json({ msg: 'Event shared successfully within the app' });
+  } catch (err) {
       console.error(err.message);
       res.status(500).send('Server Error');
-    }
-  });
-  
- 
-  
+  }
+});
   module.exports = router;

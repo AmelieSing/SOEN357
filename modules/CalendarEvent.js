@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const moment = require('moment');
+//make sure to install moment.js in order to get the correct date format as such: npm install moment
 
 const EventSchema = new mongoose.Schema({
   title: {
@@ -41,8 +42,13 @@ const EventSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  sharedWith: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'user',
+    },
+  ],
 });
-
 // Add a pre-save hook to format the date before saving
 EventSchema.pre('save', function (next) {
   // Format the start and end dates to MM/DD/YYYY

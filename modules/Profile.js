@@ -10,14 +10,12 @@ const ProfileSchema = new mongoose.Schema({
             type: String,
             required: true
         },
-        githubname: {
-            type: String
-    
-        },
     
         University: {
             type: String,
+            default: 'Concordia University', // Set default value since this is only concordia 
             required: true
+
         },
         Field: {
             type: String,
@@ -26,19 +24,19 @@ const ProfileSchema = new mongoose.Schema({
     
     
     
-        Posts: [
+        UserCreatedEvents: [
             {
                     type: mongoose.Schema.Types.ObjectId,
-                    ref:'Feed',
+                    ref:'event',
                     
                     
                 }
     
         ],
-        Titles:[
+        SharedEvents:[
             {
                 type: mongoose.Schema.Types.ObjectId,
-                ref:'Feed',
+                ref:'event',
                 
                 
             }
