@@ -12,7 +12,7 @@ const EventAttendanceSchema = new mongoose.Schema({
   },
   status: {
     type: String,
-    enum: ['going', 'not_going', 'interested'],
+    enum: ['going', 'not going', 'interested'],
     default: 'interested',
   },
   createdAt: {

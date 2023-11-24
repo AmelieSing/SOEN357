@@ -72,7 +72,7 @@ router.get('/', auth, async (req, res) => {
 router.post('/:eventId/interest', auth, async (req, res) => {
     try {
         const { status } = req.body;
-        const validStatuses = ['going', 'not_going', 'interested'];
+        const validStatuses = ['going', 'not going', 'interested'];
 
         if (!validStatuses.includes(status)) {
             return res.status(400).json({ msg: 'Invalid status' });
@@ -81,7 +81,7 @@ router.post('/:eventId/interest', auth, async (req, res) => {
         const eventId = req.params.eventId;
         const userId = req.user.id;
 
-        // Check if the user has already expressed interest in this event
+        // Find existing attendance record for the user and event
         let attendance = await EventAttendance.findOne({
             user: userId,
             event: eventId,
@@ -92,23 +92,37 @@ router.post('/:eventId/interest', auth, async (req, res) => {
             attendance = new EventAttendance({
                 user: userId,
                 event: eventId,
+                status: status,
             });
+        } else {
+            // Update the existing attendance record with the new status
+            attendance.status = status;
         }
 
-        attendance.status = status;
         await attendance.save();
 
-        // Update the attendees array in the Event model
+        // Remove the user's existing entry in the attendees array
         await Event.findByIdAndUpdate(
             eventId,
             {
-                $addToSet: { // Add the user to the attendees array if not already present
+                $pull: {
+                    attendees: { user: userId },
+                },
+            },
+            { new: true }
+        );
+
+        // Add the user with the new status to the attendees array
+        await Event.findByIdAndUpdate(
+            eventId,
+            {
+                $addToSet: {
                     attendees: { user: userId, status: status },
                 },
             },
-            { new: true } // Return the updated document
+            { new: true }
         )
-        .populate('attendees.user', 'name') // Populate the attendees array with user details
+        .populate('attendees.user', 'name')
         .exec(function (err, updatedEvent) {
             if (err) {
                 console.error(err.message);
@@ -122,7 +136,6 @@ router.post('/:eventId/interest', auth, async (req, res) => {
         res.status(500).send('Server Error');
     }
 });
-  
 // @route       POST api/events/:eventId/share
 // @description Share an event within the app with specific users by name
 // @access      Private
