@@ -14,3 +14,15 @@ to be able to initialize the connection to the database.
 
 Then, to start the server, type:
 **npm run server**
+
+Step 3:
+To run the application you must ensure that you another terminal open.
+Change the directory of the new terminal to:
+**./engage-concordia**
+
+Make sure that you run:
+**npm install** to be able to install React and other web plugins.
+You only need to do this command the first time you run the application.
+
+Then, to start the application, type:
+**npm start**
