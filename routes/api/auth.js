@@ -53,11 +53,12 @@ router.post('/', [
             }
         };
 
-        jwt.sign(payload, config.get('jwtSecret'), {expiresIn: 3600},
-        (err, token) => {
-            if(err) throw err;
-            res.json({token});
-        });
+        jwt.sign(payload, config.get('jwtSecret'), { expiresIn: 3600 }, (err, token) => {
+            if (err) throw err;
+            // Return both the token and the user ID in the response
+            res.json({ token, userId: user.id });
+          });
+        
     }    
     catch(err)
     {
