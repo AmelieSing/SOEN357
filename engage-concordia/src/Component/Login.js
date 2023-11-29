@@ -25,7 +25,7 @@ const Login = () => {
 
         // Redirect to the profile page
 
-        window.location.href = '/profile';
+        window.location.href = '/calendar';
       } else {
         console.error('Login failed');
       }
@@ -36,6 +36,8 @@ const Login = () => {
 
   return (
     <div>
+      <title>Login - Engage Concordia</title>
+      <link rel="stylesheet" type="text/css" href="login.scss"></link>
       <h2>Login</h2>
       <div>
         <label>

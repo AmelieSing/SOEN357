@@ -3,6 +3,8 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Login from './Component/Login';
 import Profile from './Component/Profile';
+import Calendar from './Component/Calendar';
+import ErrorPage from './Component/ErrorPage';
 
 
 
@@ -23,7 +25,13 @@ const App = () => {
           element={isAuthenticated ? <Profile /> : <Navigate to="/login" />}
         />
 
+        <Route
+          path="/calendar"
+          element={isAuthenticated ? <Calendar /> : <Navigate to="/login" />}
+        />
 
+
+        <Route path="*" element={<ErrorPage />} />
 
 
       </Routes>

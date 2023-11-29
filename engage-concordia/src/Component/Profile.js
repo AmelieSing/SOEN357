@@ -1,6 +1,7 @@
 // Profile.js
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import Navbar from './Navbar'
 
 const Profile = () => {
   const [user, setUser] = useState(null);
@@ -39,6 +40,9 @@ const Profile = () => {
 
   return (
     <div>
+      <title> Your Profile - Engage Concordia</title>
+      <link rel="stylesheet" type="text/css" href="profile.scss"></link>
+      <Navbar/>
       <h2>Profile Page</h2>
       <div>
         <strong>Name:</strong> {user.user.name}
