@@ -5,7 +5,7 @@ import Login from './Component/Login';
 import Profile from './Component/Profile';
 import Calendar from './Component/Calendar';
 import ErrorPage from './Component/ErrorPage';
-
+import './App.css';
 
 
 const App = () => {
@@ -13,7 +13,8 @@ const App = () => {
   const isAuthenticated = !!localStorage.getItem('authToken');
 
   return (
-<Router>
+    <div className = "App">
+      <Router>
       <Routes>
         
         <Route path="" element={<Navigate to="/login" />} />
@@ -36,6 +37,8 @@ const App = () => {
 
       </Routes>
     </Router>
+    </div>
+
   );
 };
 

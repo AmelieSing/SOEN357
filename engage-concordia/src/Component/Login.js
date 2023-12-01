@@ -27,6 +27,7 @@ const Login = () => {
 
         window.location.href = '/calendar';
       } else {
+
         console.error('Login failed');
       }
     } catch (error) {
@@ -34,37 +35,47 @@ const Login = () => {
     }
   };
 
+  var styling =require('./CSS/login.css');
   return (
-    <div>
-      <title>Login - Engage Concordia</title>
-      <link rel="stylesheet" type="text/css" href="login.scss"></link>
-      <h2>Login</h2>
-      <div>
-        <label>
-          Email:
-          <input
-            type="text"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </label>
-      </div>
-      <div>
-        <label>
-          Password:
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </label>
-      </div>
-      <div>
-        <button type="button" onClick={handleLogin}>
-          Login
-        </button>
-      </div>
+  <div className='Login_Page'>
+
+    <title>Login - Engage Concordia</title>
+    <link rel="stylesheet" type="text/css" href={styling}></link>
+    <div class="container">
+        <div class="title-container">
+            <div class="title">Engage Concordia</div>
+            <div class="subtitle">Get reminders for events around campus</div>
+        </div>
+        <div class="form-container">
+          <div class="login-text">Log in with your netname</div>
+          
+          <div class="email-container" >
+            <input
+              class="input-background"
+              type="text"
+              value={email}
+              placeholder="Email"
+              onChange={(e) => setEmail(e.target.value)}/>
+          </div>
+          <div class="password-container" >
+            <input
+              class="input-background"
+              type="password"
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}/>
+          </div>
+          <div class="login-button">
+              <button class="login-button-background" type="button" onClick={handleLogin}>
+                <div class="login-button-text">LOG IN</div>
+              </button>
+          </div>
+          <div class="forgot-password">Forgot password?</div>
+        </div>
     </div>
+    
+  </div>
+    
   );
 };
 
