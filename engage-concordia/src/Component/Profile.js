@@ -6,6 +6,19 @@ import Navbar from './Navbar'
 const Profile = () => {
   const [user, setUser] = useState(null);
 
+  const handleLogout = () => {
+    // Perform logout logic here
+    localStorage.setItem('authToken', "");
+    localStorage.setItem('userId', "");
+    
+
+    // Redirect to the profile page
+
+    window.location.href = '/login';
+    console.log('Logging out');
+    // You may want to add additional logic, such as clearing authentication tokens or session data
+  };
+
   useEffect(() => {
     const fetchUserData = async () => {
       try {
@@ -38,10 +51,12 @@ const Profile = () => {
     return <div>Loading...</div>;
   }
 
+  var styling =require('./CSS/profile.css');
+
   return (
     <div>
       <title> Your Profile - Engage Concordia</title>
-      <link rel="stylesheet" type="text/css" href="profile.scss"></link>
+      <link rel="stylesheet" type="text/css" href={styling}></link>
       <Navbar/>
       <h2>Profile Page</h2>
       <div>
@@ -56,6 +71,11 @@ const Profile = () => {
       <div>
         <strong>Field:</strong> {user.Field}
       </div>
+      <div class="logout-button">
+              <button class="logout-button-background" type="button" onClick={handleLogout}>
+                <div class="logout-button-text">LOG OUT</div>
+              </button>
+          </div>
     </div>
   );
 };

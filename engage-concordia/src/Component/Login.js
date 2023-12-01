@@ -1,5 +1,5 @@
 // Login.js
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 const Login = () => {
@@ -25,7 +25,7 @@ const Login = () => {
 
         // Redirect to the profile page
 
-        window.location.href = '/calendar';
+        window.location.href = '/profile';
       } else {
 
         console.error('Login failed');
@@ -34,6 +34,7 @@ const Login = () => {
       console.error('Error during login:', error);
     }
   };
+
 
   var styling =require('./CSS/login.css');
   return (
