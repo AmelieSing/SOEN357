@@ -1,5 +1,23 @@
+#root{
+  height: 100%;
+  width: 100%;
+  margin: 0px;
+  padding: 0px;
+  top: 0px;
+  left: 0px;
+  margin-top: -20px;
+}
+html,body{
+  height: 100%;
+  width: 100%;
+  margin: 0px;
+}
+
 .App {
   text-align: center;
+  height: 100%;
+
+  margin: 0px;
 }
 
 .App-logo {

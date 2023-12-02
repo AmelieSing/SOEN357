@@ -1,0 +1,35 @@
+.logout-button {
+    width: 435px;
+    height: 60px;
+    left: 0;
+    top: 261px;
+    position: absolute;
+}
+
+.logout-button-background {
+    width: 435px;
+    height: 60px;
+    left: 0;
+    top: 0;
+    text-align: center;
+    position: absolute;
+    background: black;
+    border-radius: 5px;
+    border: none;
+}
+
+.logout-button-text {
+    width: 435px;
+    height: 60px;
+    left: 8.49px;
+    top: 16.67px;
+    position: absolute;
+    text-align: center;
+    color: white;
+    font-size: 22px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    line-height: 30.94px;
+    word-wrap: break-word;
+}
+
