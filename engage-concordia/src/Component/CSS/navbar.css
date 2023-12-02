@@ -17,12 +17,12 @@
     padding: 0 20px; /* Adjusted padding for better spacing */
   }
 
-  .app-name {
+   .app-name {
     position: relative;
     top: 0;
     left: 0; /* Adjusted left to align with the start of the navbar */
   }
-  
+   
   button {
     background-color: transparent;
     background-repeat: no-repeat;

@@ -9,6 +9,7 @@ import Navbar from './Navbar';
 import './CSS/profile.css';  // Import the CSS file directly
 import BtnWithoutIcon from './LogoutButton';
 import "./CSS/chat-box.css";
+import profilePic from './CSS/images/profile_pic.jpg';
 
 
 export const ChatUnclicked = ({ onChatClick }) => {
@@ -115,8 +116,7 @@ var styling = require('./CSS/profile.css');
   <div className="profile-page">
     <title> Your Profile - Engage Concordia</title>
     <link rel="stylesheet" type="text/css" href={styling}></link>
-    <Navbar/>
-    
+    <Navbar />
       <Header className="header-instance" ellipse="image.png" />
       <div className="my-events">
         <div className="my-event">
@@ -206,7 +206,7 @@ var styling = require('./CSS/profile.css');
       </div>
       <div className="user-information">
         <div className="avatar">
-          <img className="img" alt="Ellipse" src="ellipse-3.png" />
+          <img className="img" alt="Ellipse" src={profilePic} />
           <div className="group-3">
             <div className="text-wrapper-10">Alex Steeves</div>
             <div className="bachelor-of-computer">
