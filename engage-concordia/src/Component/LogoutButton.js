@@ -8,5 +8,4 @@ const BtnWithoutIcon = ({ onClick, text, className, frameClassName }) => (
     </button>
   </div>
 );
-
 export default BtnWithoutIcon;

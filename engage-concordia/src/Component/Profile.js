@@ -42,16 +42,6 @@ export const ChatBox = ({ onClose }) => {
   );
 };
 
-// const Popup = ({ onClose }) => {
-//   // Implement your popup content here
-//   return (
-//     <div className="popup">
-//       <p>This is the popup content</p>
-//       <button onClick={onClose}>Close Popup</button>
-//     </div>
-//   );
-// };
-
 const Header = () => null;
 
 const Profile = () => {
@@ -226,12 +216,12 @@ var styling = require('./CSS/profile.css');
         </div>
 
         <BtnWithoutIcon
-        onClick={handleLogout}
-        text="LOG OUT"
-        className="logout-button-background"
-        frameClassName="logout-button"
-      />
-    </div>
+          onClick={handleLogout}
+          text="LOG OUT"
+          className="logout-button-text"
+          frameClassName="btn-log-out"
+        />
+            </div>
 
 
   );
