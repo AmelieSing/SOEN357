@@ -202,7 +202,7 @@ var styling = require('./CSS/profile.css');
         <img className="scrolling" alt="Scrolling" src="scrolling.png" />
       </div>
       <div className="my-events-header">
-        <div className="text-wrapper-9">My events</div>
+        <div className="text-wrapper-9 ">My Events</div>
       </div>
       <div className="user-information">
         <div className="avatar">
