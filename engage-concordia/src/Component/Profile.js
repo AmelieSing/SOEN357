@@ -65,7 +65,7 @@ var styling = require('./CSS/profile.css');
     <Navbar/>
     
       <Header className="header-instance" ellipse="image.png" />
-      <div className="events">
+      <div className="my-events">
         <div className="my-event">
           <div className="group-wrapper">
             <div className="group-2">
@@ -90,7 +90,7 @@ var styling = require('./CSS/profile.css');
                     <div className="text-wrapper-6">18 interested</div>
                   </div>
                 </div>
-                <div className="event-title">Dine &amp; Dance</div>
+                <div className="event-title-2">Dine &amp; Dance</div>
               </div>
               <div className="event-specific-2">
                 <div className="event-details-2">

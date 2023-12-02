@@ -13,29 +13,23 @@
     top: 0 !important;
   }
   
-  .profile-page .events {
-    background-color: #f0f0f0;
-    border-radius: 10px;
-    box-shadow: 0px 4px 4px #00000040;
-    height: 653px;
-    left: 571px;
-    position: absolute;
-    top: 227px;
-    width: 792px;
-  }
+  
   
   .profile-page .my-event {
-    box-shadow: 0px 4px 4px #00000040;
-    height: 590px;
-    left: 32px;
-    position: absolute;
-    top: 6px;
-    width: 708px;
+    background-color: #f0f0f0; /* Remove or adjust styling */
+    border-radius: 10px; /* Remove or adjust styling */
+    box-shadow: 0px 4px 4px #00000040; /* Remove or adjust styling */
+    height: 653px; /* Remove or adjust styling */
+    left: 571px; /* Remove or adjust styling */
+    position: absolute; /* Remove or adjust styling */
+    top: 227px; /* Remove or adjust styling */
+    width: 792px; /* Remove or adjust styling */
+    overflow-y: auto; /* Add this to make it scrollable */
   }
   
   .profile-page .group-wrapper {
     height: 590px;
-    overflow: hidden;
+    overflow-y: auto; /* or overflow: auto; */
   }
   
   .profile-page .group-2 {
@@ -214,8 +208,10 @@
     line-height: var(--p-large-bold-line-height);
     position: absolute;
     top: -1px;
-    width: 708px;
-  }
+    width: 100%; /* Set width to 100% to ensure it stretches across the container */
+    text-align: left; /* Align text to the left */
+    padding-left: 20px; /* Add padding if needed */
+}
   
   .profile-page .event-specific-2 {
     height: 208px;
