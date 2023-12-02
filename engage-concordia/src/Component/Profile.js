@@ -1,5 +1,8 @@
 // Profile.js
 
+import ChatUnclickedIcon from './CSS/images/chat_unclicked.svg';
+import SendUnclickedIcon from './CSS/images/send_unclicked.svg';
+
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Navbar from './Navbar';
@@ -7,12 +10,22 @@ import './CSS/profile.css';  // Import the CSS file directly
 import BtnWithoutIcon from './LogoutButton';
 
 
-// Placeholder components for removed imports
-const ChatUnclicked = () => null;
-const ChatboxEllipses = () => null;
+export const ChatUnclicked = () => {
+  return (
+    <div className="chat-unclicked">
+      <img className="vector" alt="Vector" src={ChatUnclickedIcon} />
+    </div>
+  );
+};
+
+export const SendUnclicked = () => {
+  return (
+    <div className="send-unclicked">
+      <img className="vector" alt="Vector"src={SendUnclickedIcon}  />
+    </div>
+  );
+};
 const Header = () => null;
-const PaperPlane = () => null;
-const SendUnclicked = () => null;
 
 
 const Profile = () => {
@@ -125,8 +138,8 @@ var styling = require('./CSS/profile.css');
                     </div>
                     <div className="date">December 18, 2024</div>
                     <div className="actionable-2">
-                      <ChatboxEllipses variant="filled" />
-                      <PaperPlane variant="filled" />
+                      <ChatUnclicked variant="filled" />
+                      <SendUnclicked variant="filled" />
                     </div>
                   </div>
                   <p className="p">

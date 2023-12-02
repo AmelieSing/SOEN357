@@ -111,18 +111,31 @@
     width: 197px;
   }
   
-  .profile-page .chat-unclicked {
-    background: url(./images/chat_unclicked.svg);
-    background-size: contain; /* Adjust the size accordingly */
-    height: 30px !important;
-    width: 30px !important;
+  .chat-unclicked {
+    height: 30px;
+    position: relative;
+    width: 30px;
+    display: inline-block; 
   }
+  .chat-unclicked .vector {
+    height: 24px;
+    left: -29px;
+    position: absolute;
+    top: -4px;
+    width: 20px;
+    }
   
-  .profile-page .send-unclicked {
-    background: url(./images/send_unclicked.svg);
-    background-size: contain; /* Adjust the size accordingly */
-    height: 30px !important;
-    width: 30px !important;
+  .send-unclicked {
+    height: 30px;
+    position: relative;
+    width: 30px;
+    display: inline-block; }
+.send-unclicked .vector {
+    height: 24px;
+    left: -25px;
+    position: absolute;
+    top: -4px;
+    width: 60px;
   }
   
   .profile-page .event-description {
