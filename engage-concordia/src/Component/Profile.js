@@ -8,28 +8,66 @@ import axios from 'axios';
 import Navbar from './Navbar';
 import './CSS/profile.css';  // Import the CSS file directly
 import BtnWithoutIcon from './LogoutButton';
+import "./CSS/chat-box.css";
 
 
-export const ChatUnclicked = () => {
+export const ChatUnclicked = ({ onChatClick }) => {
   return (
-    <div className="chat-unclicked">
+    <div className="chat-unclicked" onClick={onChatClick}>
       <img className="vector" alt="Vector" src={ChatUnclickedIcon} />
     </div>
   );
 };
-
-export const SendUnclicked = () => {
+export const SendUnclicked = ({ onShareClick }) => {
   return (
-    <div className="send-unclicked">
-      <img className="vector" alt="Vector"src={SendUnclickedIcon}  />
+    <div className="send-unclicked" onClick={onShareClick}>
+      <img className="vector" alt="Vector" src={SendUnclickedIcon} />
     </div>
   );
 };
-const Header = () => null;
 
+export const ChatBox = ({ onClose }) => {
+  return (
+    <div className="chat-box">
+      <div className="header">
+        <button className="close-button" onClick={onClose}>
+          X
+        </button>
+      </div>
+      <div className="content">
+        {/* Your chat content goes here */}
+      </div>
+    </div>
+  );
+};
+
+// const Popup = ({ onClose }) => {
+//   // Implement your popup content here
+//   return (
+//     <div className="popup">
+//       <p>This is the popup content</p>
+//       <button onClick={onClose}>Close Popup</button>
+//     </div>
+//   );
+// };
+
+const Header = () => null;
 
 const Profile = () => {
   const [user, setUser] = useState(null);
+  const [popupVisible, setBoxVisible] = useState(false);
+
+
+  const handleChatClick = () => {
+    setBoxVisible((prev) => !prev);
+  };
+
+  const closePopup = () => {
+    setBoxVisible(false);
+  };
+
+
+
 
   const handleLogout = () => {
     localStorage.setItem('authToken', '');
@@ -37,6 +75,7 @@ const Profile = () => {
     window.location.href = '/login';
     console.log('Logging out');
   };
+
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -91,9 +130,10 @@ var styling = require('./CSS/profile.css');
                     </div>
                     <div className="date">December 9, 2024</div>
                     <div className="actionable">
-                      <ChatUnclicked className="chat-unclicked" />
+                      <ChatUnclicked onChatClick={handleChatClick} />
                       <SendUnclicked className="send-unclicked" />
                     </div>
+                    {popupVisible && <ChatBox onClose={closePopup} />} {/* Add this line */}
                   </div>
                   <p className="event-description">
                     Don&#39;t miss this last one of 2023!! Live music from Twin City Alpine Echo
@@ -114,9 +154,10 @@ var styling = require('./CSS/profile.css');
                     </div>
                     <div className="date">December 17, 2024</div>
                     <div className="actionable-2">
-                      <ChatUnclicked className="chat-unclicked" />
+                    <ChatUnclicked onChatClick={handleChatClick}/>
                       <SendUnclicked className="send-unclicked" />
                     </div>
+                    {popupVisible && <ChatBox onClose={closePopup} />} {/* Add this line */}
                   </div>
                   <p className="p">
                     Get ready to be swept away by the magic of the holiday season as our area&#39;s talented performers
@@ -138,9 +179,10 @@ var styling = require('./CSS/profile.css');
                     </div>
                     <div className="date">December 18, 2024</div>
                     <div className="actionable-2">
-                      <ChatUnclicked variant="filled" />
+                    <ChatUnclicked onChatClick={handleChatClick} />
                       <SendUnclicked variant="filled" />
                     </div>
+                    {popupVisible && <ChatBox onClose={closePopup} />} {/* Add this line */}
                   </div>
                   <p className="p">
                     We&#39;ll be having a snack table, lots of fun Christmas themed activities, Storytime provided by

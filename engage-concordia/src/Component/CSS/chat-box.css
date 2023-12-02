@@ -1,0 +1,31 @@
+/* Adjust the height and padding as needed */
+.chat-box {
+  height: 400px;
+  width: 650px;
+  position: fixed;
+  top: 410px;
+  left: 50%; /* Adjust the left position if needed */
+  transform: translateX(-50%);
+  background-color: #fff;
+  padding: 20px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  z-index: 999;
+}
+
+.header {
+  background-color: #f0f0f0;
+  padding: 10px;
+  text-align: right;
+}
+
+.close-button {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.content {
+  padding: 20px;
+  /* Add other styles for the chat content */
+}
