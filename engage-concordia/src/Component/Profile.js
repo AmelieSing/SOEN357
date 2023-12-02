@@ -6,6 +6,7 @@ import SendUnclickedIcon from './CSS/images/send_unclicked.svg';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Navbar from './Navbar';
+
 import './CSS/profile.css';  // Import the CSS file directly
 import BtnWithoutIcon from './LogoutButton';
 import "./CSS/chat-box.css";
@@ -104,9 +105,9 @@ var styling = require('./CSS/profile.css');
   return (
 
   <div className="profile-page">
-    <title> Your Profile - Engage Concordia</title>
-    <link rel="stylesheet" type="text/css" href={styling}></link>
-    <Navbar />
+     <title>Your Profile - Engage Concordia</title>
+      <link rel="stylesheet" type="text/css" href={styling}></link>
+      <Navbar />
       <Header className="header-instance" ellipse="image.png" />
       <div className="my-events">
         <div className="my-event">
@@ -198,19 +199,13 @@ var styling = require('./CSS/profile.css');
         <div className="avatar">
           <img className="img" alt="Ellipse" src={profilePic} />
           <div className="group-3">
-            <div className="text-wrapper-10">Alex Steeves</div>
-            <div className="bachelor-of-computer">
-              Bachelor of <br />
-              Computer Science
-            </div>
+            <div className="text-wrapper-10">{user.user.name}</div>
+            <div className="bachelor-of-computer">{user.Field}</div>
           </div>
         </div>
         <div className="biography">
           <div className="overlap-group">
-            <p className="i-am-enthusiastic-in">
-              I am enthusiastic in organizing events and fundraising initiatives. My passion is creating a positive and
-              dynamic atmosphere within Concordia&#39;s student community.
-            </p>
+          <p className="i-am-enthusiastic-in">{user.bio}</p>
           </div>
         </div>
         </div>
