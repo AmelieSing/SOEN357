@@ -6,12 +6,12 @@ import SendUnclickedIcon from './CSS/images/send_unclicked.svg';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Navbar from './Navbar';
+import { useLocation } from 'react-router-dom';
 
 import './CSS/profile.css';  // Import the CSS file directly
 import BtnWithoutIcon from './LogoutButton';
 import "./CSS/chat-box.css";
 import profilePic from './CSS/images/profile_pic.jpg';
-
 
 export const ChatUnclicked = ({ onChatClick }) => {
   return (
@@ -49,6 +49,10 @@ const Profile = () => {
   const [user, setUser] = useState(null);
   const [popupVisible, setBoxVisible] = useState(false);
 
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
+  const token = params.get('token');
+  const userId = params.get('userId');
 
   const handleChatClick = () => {
     setBoxVisible((prev) => !prev);
@@ -62,7 +66,7 @@ const Profile = () => {
 
 
   const handleLogout = () => {
-    localStorage.setItem('authToken', '');
+    localStorage.setItem('token', '');
     localStorage.setItem('userId', '');
     window.location.href = '/login';
     console.log('Logging out');
@@ -72,14 +76,17 @@ const Profile = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const authToken = localStorage.getItem('authToken');
-        const userId = localStorage.getItem('userId');
 
+
+        //const userId = localStorage.getItem('userId');
+        //const token = localStorage.getItem('token');
+        console.log('User ID:', userId);
+        console.log('Auth token:', token);
         const url = 'http://localhost:5000/api/profile/user/' + userId;
         const response = await axios.get(url, {
           headers: {
             'Content-Type': 'application/json',
-            'x-auth-token': authToken,
+            'x-auth-token': token,
           },
         });
 

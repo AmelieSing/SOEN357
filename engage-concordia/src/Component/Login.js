@@ -1,33 +1,33 @@
 // Login.js
+// Login.js
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-
   const handleLogin = async () => {
     try {
       const response = await axios.post('http://localhost:5000/api/Auth', {
-        email, // Assuming email is the actual username
+        email,
         password,
       });
 
       if (response.status === 200) {
-        const { authToken, userId } = response.data;
-        
+        const { token, userId } = response.data;
 
         // Store the authentication token in localStorage
-        localStorage.setItem('authToken', authToken);
+        localStorage.setItem('token', token);
         localStorage.setItem('userId', userId);
-        
+        console.log ('User ID:', userId);
+        console.log ('Auth token:', token);
+
 
         // Redirect to the profile page
-
-        window.location.href = '/profile';
+        window.location.href = `/profile?token=${token}&userId=${userId}`;
       } else {
-
         console.error('Login failed');
       }
     } catch (error) {
@@ -35,8 +35,7 @@ const Login = () => {
     }
   };
 
-
-  var styling =require('./CSS/login.css');
+  var styling = require('./CSS/login.css');
   return (
   <div className='Login_Page'>
 

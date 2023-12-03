@@ -1,23 +1,27 @@
 const express = require('express');
 const connectDB = require('./config/db');
-var cors = require('cors');
+const cors = require('cors');
+const authMiddleware = require('./middleware/auth');
 
 const app = express();
 
-//Connect Database
+// Connect Database
 connectDB();
 
-app.use(express.json({ extended: false }));
+// Middleware
+app.use(express.json());
 app.use(cors());
-app.get('/', (req, res) => res.send('API Running'));
 
-// Define Routes
+// Routes
+app.get('/', (req, res) => res.send('API Running'));
 app.use('/api/users', require('./routes/api/users'));
 app.use('/api/Auth', require('./routes/api/auth'));
 app.use('/api/profile', require('./routes/api/profile'));
 app.use('/api/feed', require('./routes/api/feed'));
 app.use('/api/events', require('./routes/api/event'));
 
+// Apply authentication middleware globally
+app.use(authMiddleware);
 
 const PORT = process.env.PORT || 5000;
 
