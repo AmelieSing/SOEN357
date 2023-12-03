@@ -83,10 +83,19 @@ const firstDayOfMonth = new Date(year, month, 1).getDay();
 
 const renderCalendarGrid = () => {
   const grid = [];
+  const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
+  // Add weekday labels
+  for (let i = 0; i < 7; i++) {
+    grid.push(
+      <div key={i} className="weekday-label">
+        {daysOfWeek[i]}
+      </div>
+    );
+  }
 
   // Add empty cells for days before the first day of the month
   for (let i = 0; i < firstDayOfMonth; i++) {
-   
     grid.push(<div key={'empty-${i}'} className="empty-cell"></div>);
   }
 
@@ -141,13 +150,21 @@ const renderCalendarGrid = () => {
           </button>
         </div>
         <div className="calendar-container">
+
           <div className="weekday-labels">
-            {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((day, index) => (
-              <div key={index} className="weekday-label">{day}</div>
-            ))}
+          
              <div className="calendar-grid">{renderCalendarGrid()}</div>
           </div>
-          
+            <div className="weekday-label-grid">
+              <div className="day-label">Sunday</div>
+              <div className="day-label">Monday</div>
+              <div className="day-label">Tuesday</div>
+              <div className="day-label">Wednesday</div>
+              <div className="day-label">Thursday</div>
+              <div className="day-label">Friday</div>
+              <div className="day-label">Saturday</div>
+              
+              </div>      
         </div>
       </div>
     </div>
