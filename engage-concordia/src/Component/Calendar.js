@@ -70,10 +70,11 @@ const Calendar = () =>{
       if (responseAddEvent.status === 200) {
         console.log(responseAddEvent.data);
         // Show a web notification
+         // Close the Add Event modal
+      closeAddEventModal();
       window.alert('Event added successfully');
 
-      // Close the Add Event modal
-      closeAddEventModal();
+     
       } else {
         console.error('Error fetching event data');
       }
