@@ -18,6 +18,9 @@ router.post(
     check('title', 'Title is required').not().isEmpty(),
     check('start', 'Start date is required').not().isEmpty(),
     check('end', 'End date is required').not().isEmpty(),
+    check('start_time', 'Start time is required').not().isEmpty(),
+    check('end_time', 'End time is required').not().isEmpty(),
+    check('description', 'Description is required').not().isEmpty(),
   ],
   async (req, res) => {
     const errors = validationResult(req);
@@ -26,13 +29,15 @@ router.post(
     }
 
     try {
-      const { title, start, end, description } = req.body;
+      const { title, start, end, start_time, end_time, description } = req.body;
 
       // Create a new event
       const newEvent = new Event({
           title,
           start,
           end,
+          start_time,
+          end_time,
           description,
           user: req.user.id,
       });

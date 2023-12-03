@@ -4,13 +4,60 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import profilePic from './CSS/images/profile_pic.jpg';
 
+
+
 const Calendar = () =>{
   const location = useLocation();
   const params = new URLSearchParams(location.search);
   const token = params.get('token');
   const userId = params.get('userId');
   const [user, setUser] = useState(null);
+  const [hasError, setHasError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("")
+  const [eventId, setEventId] = useState(null);
+  const [newEvent, setNewEvent] = useState({
+    title: "",
+    start: "",
+    end: "",
+    time: "",
+    description: ""
+  });
 
+
+  const addEvent = async () => {
+    try {
+      // Validation check for end date and time
+      const startDate = new Date(`${newEvent.start}T${newEvent.start_time}`);
+      const endDate = new Date(`${newEvent.end}T${newEvent.end_time}`);
+      
+      if (endDate <= startDate) {
+        // Set error message
+        setErrorMessage('End date and time must be after the start date and time');
+        console.log('End date and time must be after the start date and time');
+        setHasError(true);
+        return;
+      }
+  
+      const url = 'http://localhost:5000/api/events';
+      const responseAddEvent = await axios.post(url, newEvent, {
+        headers: {
+          'Content-Type': 'application/json',
+          'x-auth-token': token,
+        },
+      });
+  
+      if (responseAddEvent.status === 200) {
+        console.log(responseAddEvent.data);
+      } else {
+        console.error('Error fetching user data');
+      }
+    } catch (error) {
+      console.error('Error during user data fetch:', error);
+    }
+  };
+
+  const [showAddEventModal, setShowAddEventModal] = useState(false);
+  
 
     useEffect(() => {
     const fetchUserData = async () => {
@@ -53,18 +100,73 @@ const Calendar = () =>{
       }
 
     }
+   
+  
+
+
+
+
+    
+    // const shareEvent = async () => {
+    //   try {
+    //     const eventId = fetchCalendarData();
+    //     const url = 'http://localhost:5000/api/events/' + eventId + '/share';
+    //     const responseShare = await axios.post(url, {
+    //       headers: {
+    //         'Content-Type': 'application/json',
+    //         'x-auth-token': token,
+    //       },
+    //     });
+    //     if (responseShare.status === 200) {
+    //       console.log(responseShare.data);
+    //     } else {
+    //       console.error('Error fetching user data');
+    //     }
+    //   } catch (error) {
+    //     console.error('Error during user data fetch:', error);
+    //   }
+
+    // }
+
+
 
 
   
 
     fetchUserData();
     fetchCalendarData();
+
   }, 
   []);
 
   if (!user) {
     return <div>Loading...</div>;
   }
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setNewEvent({
+      ...newEvent,
+      [name]: value
+    });
+  };
+
+
+  const openAddEventModal = () => {
+    console.log("Opening Add Event Modal");
+    setShowAddEventModal(true);
+  };
+  
+  const closeAddEventModal = () => {
+    setShowAddEventModal(false);
+    // Reset the form fields when the modal is closed
+    setNewEvent({
+      title: "",
+      start: "",
+      end: "",
+      time: "",
+      description: ""
+    });
+  };
   
 
     const handleCalendar = () => {
@@ -79,7 +181,7 @@ const Calendar = () =>{
     let year = new Date().getFullYear();
     let month = new Date().getMonth();
     const daysInMonth = new Date(year, month + 1, 0).getDate();
-const firstDayOfMonth = new Date(year, month, 1).getDay();
+  const firstDayOfMonth = new Date(year, month, 1).getDay();
 
 const renderCalendarGrid = () => {
   const grid = [];
@@ -142,12 +244,12 @@ const renderCalendarGrid = () => {
               </svg>
             </button>
           </div>
-          <button className="add-event-container" type="button" >
-            <div className="add-event-text">Add Event</div> 
-            <svg className ="plus-sign" width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path fill-rule="evenodd" clip-rule="evenodd" d="M11 4.125C11.3797 4.125 11.6875 4.4328 11.6875 4.8125V10.3125H17.1875C17.5672 10.3125 17.875 10.6203 17.875 11C17.875 11.3797 17.5672 11.6875 17.1875 11.6875H11.6875V17.1875C11.6875 17.5672 11.3797 17.875 11 17.875C10.6203 17.875 10.3125 17.5672 10.3125 17.1875V11.6875H4.8125C4.4328 11.6875 4.125 11.3797 4.125 11C4.125 10.6203 4.4328 10.3125 4.8125 10.3125H10.3125V4.8125C10.3125 4.4328 10.6203 4.125 11 4.125Z" fill="white" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </button>
+          <button className="add-event-container" type="button" onClick={openAddEventModal}>
+          <div className="add-event-text">Add Event</div>
+          <svg className="plus-sign" width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path fillRule="evenodd" clipRule="evenodd" d="M11 4.125C11.3797 4.125 11.6875 4.4328 11.6875 4.8125V10.3125H17.1875C17.5672 10.3125 17.875 10.6203 17.875 11C17.875 11.3797 17.5672 11.6875 17.1875 11.6875H11.6875V17.1875C11.6875 17.5672 11.3797 17.875 11 17.875C10.6203 17.875 10.3125 17.5672 10.3125 17.1875V11.6875H4.8125C4.4328 11.6875 4.125 11.3797 4.125 11C4.125 10.6203 4.4328 10.3125 4.8125 10.3125H10.3125V4.8125C10.3125 4.4328 10.6203 4.125 11 4.125Z" fill="white" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+        </button>
         </div>
         <div className="calendar-container">
 
@@ -164,11 +266,132 @@ const renderCalendarGrid = () => {
               <div className="day-label">Friday</div>
               <div className="day-label">Saturday</div>
               
-              </div>      
+              </div>   
+                 
         </div>
       </div>
+     {/* Add Event Modal */}
+     {showAddEventModal && (
+  <div className="add-event-modal">
+    <div className="modal-content">
+      {/* Display error message */}
+      {errorMessage && <div className="error-message">{errorMessage}</div>}
+      <span className="close" onClick={closeAddEventModal}>&times;</span>
+      <form className={hasError ? "error" : ""}>
+        
+        <h2>Add Event</h2>
+        {hasError && (
+    <div className="error-message">End date and time must be after start date and time</div>
+  )}
+        <label>Event Title:</label>
+        <input
+          type="text"
+          name="title"
+          value={newEvent.title}
+          onChange={handleInputChange}
+          placeholder="Give your event a short distinct name"
+        />
+
+        <label>Description:</label>
+        <input
+          name="description"
+          value={newEvent.description}
+          onChange={handleInputChange}
+          placeholder="Tell us more about this event"
+          style={{ height: '100px' }} // Increased height
+        />
+
+<div style={{ display: 'flex', justifyContent: 'space-between' }}>
+          <div style={{ flexBasis: '48%' }}>
+            <label>Starts:</label>
+            <input
+              type="date"
+              name="start"
+              value={newEvent.start}
+              onChange={handleInputChange}
+              style={{ width: '250px', height: '63px' }}
+            />
+          </div>
+
+          <div style={{ display: 'flex', flexDirection: 'column', flexBasis: '48%', alignItems: 'flex-start' }}>
+            <label>Time:</label>
+            <div style={{ display: 'flex' }}>
+              <select
+                name="start_time"
+                value={newEvent.start_time}
+                onChange={handleInputChange}
+                style={{ width: '78px', height: '63px' }}
+              >
+                {Array.from({ length: 12 }, (_, i) => i + 1).map((hour) => (
+                  <option key={`start_${hour}`} value={`${hour.toString().padStart(2, '0')}:00`}>
+                    {`${hour.toString().padStart(2, '0')}:00`}
+                  </option>
+                ))}
+              </select>
+              <select
+                name="start_am_pm"
+                value={newEvent.start_am_pm}
+                onChange={handleInputChange}
+                style={{ width: '78px', height: '63px' }}
+              >
+                <option value="AM">AM</option>
+                <option value="PM">PM</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+          <div style={{ flexBasis: '48%' }}>
+            <label>Ends:</label>
+            <input
+              type="date"
+              name="end"
+              value={newEvent.end}
+              onChange={handleInputChange}
+              style={{ width: '250px', height: '63px' }}
+            />
+          </div>
+
+          <div style={{ display: 'flex', flexDirection: 'column', flexBasis: '48%', alignItems: 'flex-start' }}>
+            <label>Time:</label>
+            <div style={{ display: 'flex' }}>
+              <select
+                name="end_time"
+                value={newEvent.end_time}
+                onChange={handleInputChange}
+                style={{ width: '78px', height: '63px' }}
+              >
+                {Array.from({ length: 12 }, (_, i) => i + 1).map((hour) => (
+                  <option key={`end_${hour}`} value={`${hour.toString().padStart(2, '0')}:00`}>
+                    {`${hour.toString().padStart(2, '0')}:00`}
+                  </option>
+                ))}
+              </select>
+              <select
+                name="end_am_pm"
+                value={newEvent.end_am_pm}
+                onChange={handleInputChange}
+                style={{ width: '78px', height: '63px' }}
+              >
+                <option value="AM">AM</option>
+                <option value="PM">PM</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div style={{ display: 'flex', justifyContent: 'center' }}>
+          <button type="button" onClick={addEvent}>
+            Add Event
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+)}
     </div>
   );
-}
+};
 
 export default Calendar;
