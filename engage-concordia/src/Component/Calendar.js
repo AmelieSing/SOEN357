@@ -15,12 +15,6 @@ const Calendar = () =>{
     useEffect(() => {
     const fetchUserData = async () => {
       try {
-
-
-        //const userId = localStorage.getItem('userId');
-        //const token = localStorage.getItem('token');
-        console.log('User ID:', userId);
-        console.log('Auth token:', token);
         const url = 'http://localhost:5000/api/profile/user/' + userId;
         const response = await axios.get(url, {
           headers: {
