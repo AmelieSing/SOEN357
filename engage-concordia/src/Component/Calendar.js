@@ -88,7 +88,8 @@ const Calendar = () =>{
  
 
   const [showAddEventModal, setShowAddEventModal] = useState(false);
-  
+  const [createdEvents, setCreatedEvents] = useState([]);
+  const [sharedEvents, setSharedEvents] = useState([]);
   
 
     useEffect(() => {
@@ -125,7 +126,9 @@ const Calendar = () =>{
               });
         
               if (responseEvents.status === 200) {
-                console.log(responseEvents.data);
+                //console.log(responseEvents.data);
+                setSharedEvents(responseEvents.data.SharedEvents) ;
+                setCreatedEvents(responseEvents.data.UserCreatedEvents) ;
               } else {
                 console.error('Error fetching user data');
               }
@@ -197,6 +200,11 @@ const Calendar = () =>{
     const daysInMonth = new Date(year, month + 1, 0).getDate();
   const firstDayOfMonth = new Date(year, month, 1).getDay();
 
+  
+
+
+  
+
   const handleNextMonth = () => {
     const newDate = new Date(currentDate);
     newDate.setMonth(newDate.getMonth() + 1);
@@ -245,10 +253,66 @@ const Calendar = () =>{
 
   // Add cells for each day of the month
   for (let day = 1; day <= daysInMonth; day++) {
+  
+  
+    var sharedEventsTitles = [];
+    var createdEventsTitles = [];
+    for(let event of sharedEvents){
+
+  
+
+      const eventStartDate = event.start;
+      const eventDateExtraction = eventStartDate.substring(0, eventStartDate.indexOf("T"));
+      const eventYear = eventDateExtraction.substring(0, eventDateExtraction.indexOf("-"));
+    
+      if(Number(eventYear) === year){
+   
+        const eventMonth = eventDateExtraction.substring( eventDateExtraction.indexOf("-") + 1, 
+        eventDateExtraction.lastIndexOf("-"));
+       
+        if(Number(eventMonth)-1 === month){
+     
+          const eventDate = eventDateExtraction.substring(eventDateExtraction.length-1,eventDateExtraction.lastIndexOf("-")+1)
+
+          if(Number(eventDate) === day){
+            console.log("Add event")
+            sharedEventsTitles.push(event.title);
+          }
+        }
+      }
+    }
+
+    for(let event of createdEvents){
+      const eventStartDate = event.start;
+      const eventDateExtraction = eventStartDate.substring(0, eventStartDate.indexOf("T"));
+      const eventYear = eventDateExtraction.substring(0, eventDateExtraction.indexOf("-"));
+    
+      if(Number(eventYear) === year){
+   
+        const eventMonth = eventDateExtraction.substring( eventDateExtraction.indexOf("-") + 1, 
+        eventDateExtraction.lastIndexOf("-"));
+       
+        if(Number(eventMonth)-1 === month){
+     
+          const eventDate = eventDateExtraction.substring(eventDateExtraction.length-1,eventDateExtraction.lastIndexOf("-")+1)
+
+          if(Number(eventDate) === day){
+            console.log("Add event")
+            createdEventsTitles.push(event.title);
+          }
+        }
+      }
+    }
+
+    
+
     grid.push(
       <div key={day} className="calendar-cell">
         {day}
         {/* You can add event markers or details here */}
+        {createdEventsTitles}
+        {sharedEventsTitles}
+        
       </div>
     );
   }
