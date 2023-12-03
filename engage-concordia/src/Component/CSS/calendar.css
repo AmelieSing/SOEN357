@@ -1,4 +1,82 @@
+body{
+    overflow: hidden;
+}
+.Calendar-Page{
+    background-color:#C8C8C8;
+    height: 100%;
 
+}
+
+.navigation-container{
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.select-date-container{
+    position: relative;
+    display: flex;
+    margin-left: 66px;
+    margin-top: 26px;
+}
+
+.last-month{
+   
+}
+.current-month{
+    color: #000;
+
+    /* Headline 2 */
+    font-family: 'Inter', sans-serif;
+    font-size: 40px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+.next-month{
+    
+}
+
+.calendar-container{
+    position: relative;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    background-color: #F0F0F0;
+    margin-top:32px; 
+    height: 776px;
+}
+
+.add-event-container{
+    position: relative;
+    display:flex;
+    width: 192px;
+    height: 43px;
+    background-color: #912338;
+    border-radius: 5px;
+    margin-top: 29px;
+    margin-right: 66px;
+    padding-top: 10px;
+    padding-right:px;
+}
+
+.add-event-text{
+    width: 122px;
+    height: 43px;   
+    margin-top: -2px;
+    padding-left: 19px;
+    color: #FFF;
+    font-family: 'Inter', sans-serif;
+    font-size: 22px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal; 
+}
+
+.plus-sign{
+    padding-left: 12px;
+    padding:0px;
+    margin:0px;
+}
 .Navbar-container{
     display: inline-flex;
     justify-content: space-between;
