@@ -31,13 +31,36 @@ const Calendar = () =>{
       } catch (error) {
         console.error('Error during user data fetch:', error);
       }
+
     };
+    const fetchCalendarData = async () => {
+      try {
+        const url = 'http://localhost:5000/api/profile/CalendarEvent';
+        const responseEvents = await axios.get(url, {
+          headers: {
+            'Content-Type': 'application/json',
+            'x-auth-token': token,
+          },
+        });
+
+        if (responseEvents.status === 200) {
+          console.log(responseEvents.data);
+        } else {
+          console.error('Error fetching user data');
+        }
+      } catch (error) {
+        console.error('Error during user data fetch:', error);
+      }
+
+    }
 
 
   
 
     fetchUserData();
-  }, []);
+    fetchCalendarData();
+  }, 
+  []);
 
   if (!user) {
     return <div>Loading...</div>;
