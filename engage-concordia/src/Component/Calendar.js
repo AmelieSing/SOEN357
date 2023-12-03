@@ -396,6 +396,7 @@ const Calendar = () =>{
           value={newEvent.title}
           onChange={handleInputChange}
           placeholder="Give your event a short distinct name"
+          style={{ height: '50px', width: '1728px' }}
         />
 
         <label>Description:</label>
@@ -404,7 +405,7 @@ const Calendar = () =>{
           value={newEvent.description}
           onChange={handleInputChange}
           placeholder="Tell us more about this event"
-          style={{ height: '100px' }} // Increased height
+          style={{ height: '100px', width: '1728px' }} // Increased height
         />
 
 

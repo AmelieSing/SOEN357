@@ -25,6 +25,10 @@
   cursor: pointer;
 }
 
+.close-button:hover{
+  color:#912338;
+}
+
 .content {
   padding: 20px;
   /* Add other styles for the chat content */

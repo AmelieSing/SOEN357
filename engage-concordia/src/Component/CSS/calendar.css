@@ -115,7 +115,13 @@ body {
   transition: background-color 0.3s ease-in-out;
   background-color: #fff;
   margin-bottom: 10px;
-
+  color: #000;
+  text-align: center;
+  font-family: 'Inter', sans-serif;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 140.6%; /* 25.308px */ 
   
 }
 
@@ -158,12 +164,47 @@ body {
   z-index: 1;
   left: 0;
   top: 0;
-  width: 100%;
+  padding: 120px 75px 80px 75px ;
+  width: 93%;
   height: 100%;
   overflow: auto;
   background-color: rgba(0, 0, 0, 0.4);
   visibility: visible; /* Add this */
+
+  font-family: 'Inter', sans-serif;
+  font-size: 22px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 140.625%; /* 45px */ 
 }
+
+input{
+  color: rgba(0, 0, 0, 1); 
+  font-family: 'Inter', sans-serif;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 140.625%; /* 33.75px */ 
+}
+
+input::placeholder{
+  color: rgba(110, 110, 110, 0.55); 
+}
+
+
+select{
+  color: rgba(0, 0, 0, 1); 
+  font-family: 'Inter', sans-serif;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 140.625%; /* 33.75px */ 
+}
+
+select::placeholder{
+  color: rgba(110, 110, 110, 0.55); 
+}
+
 .add-event-modal.popup-background {
   display: none;
   position: fixed;
@@ -203,12 +244,16 @@ body {
 /* Close Button Styles */
 .close {
   position: absolute;
-  top: 10px;
-  right: 10px;
-  font-size: 20px;
+  font-size: 30px;
+  margin-top: 10px;
+  margin-left: 1750px;
   cursor: pointer;
-}
 
+  
+}
+.close:hover{
+  color:#912338;
+}
 
 
 .add-event-modal form {
@@ -258,65 +303,70 @@ body {
   margin: 0px;
 }
 
-.Navbar-container {
+.Navbar-container{
   display: inline-flex;
   justify-content: space-between;
-  width: 100%;
+  width:100%;
   height: 80px;
+  
   background-color: #912338;
+
   font-family: 'Inter', sans-serif;
   font-size: 32px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: 140.625%; /* 45px */
+font-style: normal;
+font-weight: 700;
+line-height: 140.625%; /* 45px */ 
   color: #fff;
 }
 
-.app-name {
+.app-name{
   position: relative;
-  top: 28px;
-  left: -77px;
+  margin-top:24px;
+  margin-left:0px;
 }
 
-button {
+button{
   background-color: transparent;
   background-repeat: no-repeat;
   border: none;
   cursor: pointer;
   outline: none;
   margin: 0;
-  padding: 0;
+  padding:0;
 }
 
 .calendar-button-text {
-  position: relative;
+  position:relative;
   padding: 0;
   margin: 0;
   left: 70px;
-  top: 8px;
+  top: 8px; 
 }
 
-.profile-button-container {
+.profile-button-container{
   display: inline-flex;
+  position: relative;
+  margin-top: 20px;
+}
+.profile-button-text{
+  
+  position: relative;
+  margin-right: 75px;
+  margin-top: 12px;
+  width: 100%;
+  
 }
 
-.profile-button-text {
-  position: absolute;
-  top: 12px;
-  right: 70px;
-}
-
-.profile-button-text,
-.calendar-button-text {
+.profile-button-text,.calendar-button-text{
   font-family: 'Inter', sans-serif;
   font-size: 26px;
   font-style: normal;
   font-weight: 700;
-  line-height: normal;
+  line-height: normal; 
   color: #fff;
 }
 
-img {
+img{
   position: absolute;
   border-radius: 100%;
   width: 56px;
@@ -324,6 +374,5 @@ img {
   size: 56px;
   top: 2px;
   right: 7px;
+  
 }
-
-
