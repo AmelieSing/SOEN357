@@ -58,9 +58,7 @@ const Calendar = () =>{
         description: newEvent.description,
       };
     console.log("start time: " + newEvent.start_time);
-    //console.log("start am pm: " + newEvent.start_am_pm);
     console.log("end time: " + newEvent.end_time);
-    //console.log("end am pm: " + newEvent.end_am_pm);
       const url = 'http://localhost:5000/api/events';
       console.log("token: " + token);
       const responseAddEvent = await axios.post(url, formattedEvent, {
@@ -136,32 +134,6 @@ const Calendar = () =>{
         
           }
 
-         
-
-
-
-
-    
-    // const shareEvent = async () => {
-    //   try {
-    //     const eventId = fetchCalendarData();
-    //     const url = 'http://localhost:5000/api/events/' + eventId + '/share';
-    //     const responseShare = await axios.post(url, {
-    //       headers: {
-    //         'Content-Type': 'application/json',
-    //         'x-auth-token': token,
-    //       },
-    //     });
-    //     if (responseShare.status === 200) {
-    //       console.log(responseShare.data);
-    //     } else {
-    //       console.error('Error fetching user data');
-    //     }
-    //   } catch (error) {
-    //     console.error('Error during user data fetch:', error);
-    //   }
-
-    // }
 
     fetchUserData();
     fetchCalendarData();
@@ -178,36 +150,6 @@ const Calendar = () =>{
   
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-
-    // if (name === 'start_time') {
-    //   setNewEvent((prevEvent) => ({
-    //     ...prevEvent,
-    //     [name]: value,
-       
-    //     start_time: combineTimeAndAmPm(value, prevEvent.start_am_pm),
-        
-    //   })); 
-    //   setSelectedStartTime( newEvent.start_time);
-    //   console.log("start time: " + newEvent.start_time);
-    // } else if (name === 'start_am_pm') {
-    //   setNewEvent((prevEvent) => ({
-    //     ...prevEvent,
-    //     [name]: value,
-    //     start_time: combineTimeAndAmPm(prevEvent.start_time, value),
-    //   }));
-    //   console.log("start time after combo: " + newEvent.start_time);
-    //   setSelectedStartAmPm(value);
-    // } else if (name === 'end_time') {
-    //   setNewEvent((prevEvent) => ({
-    //     ...prevEvent,
-    //     [name]: value,
-    //     end_time: combineTimeAndAmPm(value, prevEvent.end_am_pm),
-    //   }));
-    //   console.log("end time: " + newEvent.end_time);
-    //   setSelectedEndTime(value);
-    
-
-    // } else {
 
       setNewEvent({
         ...newEvent,
@@ -234,19 +176,6 @@ const Calendar = () =>{
       description: ""
     });
   };
-  // const combineTimeAndAmPm = (time, amPm) => {
-  //   // Assuming time is in the format 'HH:mm'
-  //   const [hours, minutes] = time.split(':');
-  //   let combinedTime = `${hours}:${minutes}`;
-  
-  //   if (amPm === 'PM') {
-  //     // Add 12 hours if PM is selected
-  //     const militaryHours = parseInt(hours, 10) + 12;
-  //     combinedTime = `${militaryHours}:${minutes}`;
-  //   }
-  
-  //   return combinedTime;
-  // };
 
     const handleCalendar = () => {
       window.location.href = `/calendar?token=${token}&userId=${userId}`;
@@ -257,10 +186,35 @@ const Calendar = () =>{
       console.log('Going to Profile Page');
     };
 
-    let year = new Date().getFullYear();
-    let month = new Date().getMonth();
+
+    const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September","October", "November", "December"];
+    var currentDate = new Date();
+    var year = currentDate.getFullYear();
+    var month = currentDate.getMonth();
+ 
+    var currentMonth = monthNames[month] +" "+ year;
     const daysInMonth = new Date(year, month + 1, 0).getDate();
   const firstDayOfMonth = new Date(year, month, 1).getDay();
+
+  const handleNextMonth = (e) => {
+      const newDate = currentDate.getMonth() + 1;
+      currentDate.setMonth(newDate)  
+    year = currentDate.getFullYear();
+      month = currentDate.getMonth();
+   
+      currentMonth = monthNames[month] +" "+ year;
+      console.log(currentMonth);
+     }
+
+  const handlePrevMonth = () => {
+    const newDate = currentDate.getMonth() - 1;
+    currentDate.setMonth(newDate)  
+    year = currentDate.getFullYear();
+    month = currentDate.getMonth();
+ 
+    currentMonth = monthNames[month] +" "+ year;
+    console.log(currentMonth);
+  }
 
 const renderCalendarGrid = () => {
   const grid = [];
@@ -311,13 +265,13 @@ const renderCalendarGrid = () => {
       <div className = "Calendar-Page">
         <div className = "navigation-container" >
           <div className = "select-date-container">
-            <button className="last-month" type="button" >
+            <button className="last-month" type="button" onClick={handlePrevMonth}>
               <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path fill-rule="evenodd" clip-rule="evenodd" d="M26.9508 32.5758C26.2186 33.3081 25.0314 33.3081 24.2992 32.5758L13.0492 21.3258C12.3169 20.5936 12.3169 19.4064 13.0492 18.6742L24.2992 7.42418C25.0314 6.69194 26.2186 6.69194 26.9508 7.42418C27.6831 8.15641 27.6831 9.34359 26.9508 10.0758L17.0267 20L26.9508 29.9242C27.6831 30.6564 27.6831 31.8436 26.9508 32.5758Z" fill="#1F1F1F" stroke="black" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
             </button>
-            <div className="current-month">December 2023</div>
-            <button className="next-month" type="button" >
+            <div className="current-month">{currentMonth}</div>
+            <button className="next-month" type="button" onClick={handleNextMonth}>
               <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path fill-rule="evenodd" clip-rule="evenodd" d="M13.0492 7.42417C13.7814 6.69194 14.9686 6.69194 15.7008 7.42417L26.9508 18.6742C27.6831 19.4064 27.6831 20.5936 26.9508 21.3258L15.7008 32.5758C14.9686 33.3081 13.7814 33.3081 13.0492 32.5758C12.3169 31.8436 12.3169 30.6564 13.0492 29.9242L22.9733 20L13.0492 10.0758C12.3169 9.34359 12.3169 8.15641 13.0492 7.42417Z" fill="#1F1F1F" stroke="black" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
