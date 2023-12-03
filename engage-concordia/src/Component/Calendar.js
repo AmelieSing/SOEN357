@@ -35,13 +35,14 @@ const Calendar = () =>{
     try {
       // Validation check for end date and time
 
-      const startDate = new Date(`${newEvent.start}T${newEvent.start_time}`);
-      const endDate = new Date(`${newEvent.end}T${newEvent.end_time}`);
+      const startDate = newEvent.start;
+      const endDate = newEvent.end;
       const startTime = newEvent.start_time;
       const endTime = newEvent.end_time;
-      if (endDate <= startDate && endTime <= startTime) {
+      if (endDate <= startDate) {
         // Set error message
         setErrorMessage('End date and time must be after the start date and time');
+        window.alert('End date and time must be after the start date and time.');
         console.log('End date and time must be after the start date and time');
         setHasError(true);
         return;
@@ -57,7 +58,9 @@ const Calendar = () =>{
         description: newEvent.description,
       };
     console.log("start time: " + newEvent.start_time);
-          console.log("start am pm: " + newEvent.start_am_pm);
+    //console.log("start am pm: " + newEvent.start_am_pm);
+    console.log("end time: " + newEvent.end_time);
+    //console.log("end am pm: " + newEvent.end_am_pm);
       const url = 'http://localhost:5000/api/events';
       console.log("token: " + token);
       const responseAddEvent = await axios.post(url, formattedEvent, {
@@ -176,42 +179,42 @@ const Calendar = () =>{
   const handleInputChange = (e) => {
     const { name, value } = e.target;
 
-    if (name === 'start_time') {
-      setNewEvent((prevEvent) => ({
-        ...prevEvent,
-        [name]: value,
-        start_time: combineTimeAndAmPm(value, prevEvent.start_am_pm),
+    // if (name === 'start_time') {
+    //   setNewEvent((prevEvent) => ({
+    //     ...prevEvent,
+    //     [name]: value,
+       
+    //     start_time: combineTimeAndAmPm(value, prevEvent.start_am_pm),
         
-      }));
-      setSelectedStartTime(value);
-    } else if (name === 'start_am_pm') {
-      setNewEvent((prevEvent) => ({
-        ...prevEvent,
-        [name]: value,
-        start_time: combineTimeAndAmPm(prevEvent.start_time, value),
-      }));
-      setSelectedStartAmPm(value);
-    } else if (name === 'end_time') {
-      setNewEvent((prevEvent) => ({
-        ...prevEvent,
-        [name]: value,
-        end_time: combineTimeAndAmPm(value, prevEvent.end_am_pm),
-      }));
-      setSelectedEndTime(value);
-    } else if (name === 'end_am_pm') {
-      setNewEvent((prevEvent) => ({
-        ...prevEvent,
-        [name]: value,
-        end_time: combineTimeAndAmPm(prevEvent.end_time, value),
-      }));
-      setSelectedEndAmPm(value);
-    } else {
+    //   })); 
+    //   setSelectedStartTime( newEvent.start_time);
+    //   console.log("start time: " + newEvent.start_time);
+    // } else if (name === 'start_am_pm') {
+    //   setNewEvent((prevEvent) => ({
+    //     ...prevEvent,
+    //     [name]: value,
+    //     start_time: combineTimeAndAmPm(prevEvent.start_time, value),
+    //   }));
+    //   console.log("start time after combo: " + newEvent.start_time);
+    //   setSelectedStartAmPm(value);
+    // } else if (name === 'end_time') {
+    //   setNewEvent((prevEvent) => ({
+    //     ...prevEvent,
+    //     [name]: value,
+    //     end_time: combineTimeAndAmPm(value, prevEvent.end_am_pm),
+    //   }));
+    //   console.log("end time: " + newEvent.end_time);
+    //   setSelectedEndTime(value);
+    
+
+    // } else {
+
       setNewEvent({
         ...newEvent,
         [name]: value,
       });
     }
-  };
+  
 
 
   const openAddEventModal = () => {
@@ -231,19 +234,19 @@ const Calendar = () =>{
       description: ""
     });
   };
-  const combineTimeAndAmPm = (time, amPm) => {
-    // Assuming time is in the format 'HH:mm'
-    const [hours, minutes] = time.split(':');
-    let combinedTime = `${hours}:${minutes}`;
+  // const combineTimeAndAmPm = (time, amPm) => {
+  //   // Assuming time is in the format 'HH:mm'
+  //   const [hours, minutes] = time.split(':');
+  //   let combinedTime = `${hours}:${minutes}`;
   
-    if (amPm === 'PM') {
-      // Add 12 hours if PM is selected
-      const militaryHours = parseInt(hours, 10) + 12;
-      combinedTime = `${militaryHours}:${minutes}`;
-    }
+  //   if (amPm === 'PM') {
+  //     // Add 12 hours if PM is selected
+  //     const militaryHours = parseInt(hours, 10) + 12;
+  //     combinedTime = `${militaryHours}:${minutes}`;
+  //   }
   
-    return combinedTime;
-  };
+  //   return combinedTime;
+  // };
 
     const handleCalendar = () => {
       window.location.href = `/calendar?token=${token}&userId=${userId}`;
@@ -399,21 +402,13 @@ const renderCalendarGrid = () => {
                 onChange={handleInputChange}
                 style={{ width: '78px', height: '63px' }}
               >
-                {Array.from({ length: 12 }, (_, i) => i + 1).map((hour) => (
+                {Array.from({ length: 24 }, (_, i) => i + 1).map((hour) => (
                   <option key={`start_${hour}`} value={`${hour.toString().padStart(2, '0')}:00`}>
                     {`${hour.toString().padStart(2, '0')}:00`}
                   </option>
                 ))}
               </select>
-              <select
-                name="start_am_pm"
-                value={newEvent.start_am_pm}
-                onChange={handleInputChange}
-                style={{ width: '78px', height: '63px' }}
-              >
-                <option value="AM">AM</option>
-                <option value="PM">PM</option>
-              </select>
+             
             </div>
           </div>
         </div>
@@ -439,21 +434,13 @@ const renderCalendarGrid = () => {
                 onChange={handleInputChange}
                 style={{ width: '78px', height: '63px' }}
               >
-                {Array.from({ length: 12 }, (_, i) => i + 1).map((hour) => (
+                {Array.from({ length: 24 }, (_, i) => i + 1).map((hour) => (
                   <option key={`end_${hour}`} value={`${hour.toString().padStart(2, '0')}:00`}>
                     {`${hour.toString().padStart(2, '0')}:00`}
                   </option>
                 ))}
               </select>
-              <select
-                name="end_am_pm"
-                value={newEvent.end_am_pm}
-                onChange={handleInputChange}
-                style={{ width: '78px', height: '63px' }}
-              >
-                <option value="AM">AM</option>
-                <option value="PM">PM</option>
-              </select>
+              
             </div>
           </div>
         </div>
