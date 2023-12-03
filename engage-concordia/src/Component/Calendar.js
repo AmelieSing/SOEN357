@@ -200,31 +200,48 @@ const Calendar = () =>{
   const handleNextMonth = () => {
     const newDate = new Date(currentDate);
     newDate.setMonth(newDate.getMonth() + 1);
+
+    // Update month and year
+    year = newDate.getFullYear();
+    month = newDate.getMonth();
+
+    // Force re-render by updating state
     setCurrentDate(newDate);
   };
+
   
   const handlePrevMonth = () => {
     const newDate = new Date(currentDate);
     newDate.setMonth(newDate.getMonth() - 1);
+
+    // Update month and year
+    year = newDate.getFullYear();
+    month = newDate.getMonth();
+
+    // Force re-render by updating state
     setCurrentDate(newDate);
   };
-const renderCalendarGrid = () => {
-  const grid = [];
-  const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  const renderCalendarGrid = () => {
+    const grid = [];
+    const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
-  // Add weekday labels
-  for (let i = 0; i < 7; i++) {
-    grid.push(
-      <div key={i} className="weekday-label">
-        {daysOfWeek[i]}
-      </div>
-    );
-  }
+    // Add weekday labels
+    for (let i = 0; i < 7; i++) {
+      grid.push(
+        <div key={i} className="weekday-label">
+          {daysOfWeek[i]}
+        </div>
+      );
+    }
 
-  // Add empty cells for days before the first day of the month
-  for (let i = 0; i < firstDayOfMonth; i++) {
-    grid.push(<div key={'empty-${i}'} className="empty-cell"></div>);
-  }
+    // Recalculate first day of the month
+    const firstDayOfMonth = new Date(year, month, 1).getDay();
+
+    // Add empty cells for days before the first day of the month
+    for (let i = 0; i < firstDayOfMonth; i++) {
+      grid.push(<div key={`empty-${i}`} className="empty-cell"></div>);
+    }
+
 
   // Add cells for each day of the month
   for (let day = 1; day <= daysInMonth; day++) {
