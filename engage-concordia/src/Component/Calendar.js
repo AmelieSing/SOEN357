@@ -75,6 +75,33 @@ const Calendar = () =>{
       window.location.href = `/profile?token=${token}&userId=${userId}`;
       console.log('Going to Profile Page');
     };
+
+    let year = new Date().getFullYear();
+    let month = new Date().getMonth();
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+const firstDayOfMonth = new Date(year, month, 1).getDay();
+
+const renderCalendarGrid = () => {
+  const grid = [];
+
+  // Add empty cells for days before the first day of the month
+  for (let i = 0; i < firstDayOfMonth; i++) {
+   
+    grid.push(<div key={'empty-${i}'} className="empty-cell"></div>);
+  }
+
+  // Add cells for each day of the month
+  for (let day = 1; day <= daysInMonth; day++) {
+    grid.push(
+      <div key={day} className="calendar-cell">
+        {day}
+        {/* You can add event markers or details here */}
+      </div>
+    );
+  }
+
+  return grid;
+};
  
   var styling =require('./CSS/calendar.css');
 
@@ -114,7 +141,13 @@ const Calendar = () =>{
           </button>
         </div>
         <div className="calendar-container">
-          <div className="weekday-labels"></div>
+          <div className="weekday-labels">
+            {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((day, index) => (
+              <div key={index} className="weekday-label">{day}</div>
+            ))}
+             <div className="calendar-grid">{renderCalendarGrid()}</div>
+          </div>
+          
         </div>
       </div>
     </div>
