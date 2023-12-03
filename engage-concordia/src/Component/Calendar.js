@@ -19,18 +19,27 @@ const Calendar = () =>{
     title: "",
     start: "",
     end: "",
-    time: "",
+    start_time: "",
+    end_time: "",
     description: ""
   });
 
+  const [selectedStartTime, setSelectedStartTime] = useState(newEvent.start_time);
+  const [selectedStartAmPm, setSelectedStartAmPm] = useState(newEvent.start_am_pm);
+  const [selectedEndTime, setSelectedEndTime] = useState(newEvent.end_time);
+  const [selectedEndAmPm, setSelectedEndAmPm] = useState(newEvent.end_am_pm);
+
 
   const addEvent = async () => {
+
     try {
       // Validation check for end date and time
+
       const startDate = new Date(`${newEvent.start}T${newEvent.start_time}`);
       const endDate = new Date(`${newEvent.end}T${newEvent.end_time}`);
-      
-      if (endDate <= startDate) {
+      const startTime = newEvent.start_time;
+      const endTime = newEvent.end_time;
+      if (endDate <= startDate && endTime <= startTime) {
         // Set error message
         setErrorMessage('End date and time must be after the start date and time');
         console.log('End date and time must be after the start date and time');
@@ -38,8 +47,20 @@ const Calendar = () =>{
         return;
       }
   
+      const formattedEvent = {
+        title: newEvent.title,
+        start:  newEvent.start,//new Date(`${newEvent.start}`).toISOString(),
+        end: newEvent.end,//new Date(`${newEvent.end}`).toISOString(),
+        start_time: newEvent.start_time,
+       
+        end_time: newEvent.end_time,
+        description: newEvent.description,
+      };
+    console.log("start time: " + newEvent.start_time);
+          console.log("start am pm: " + newEvent.start_am_pm);
       const url = 'http://localhost:5000/api/events';
-      const responseAddEvent = await axios.post(url, newEvent, {
+      console.log("token: " + token);
+      const responseAddEvent = await axios.post(url, formattedEvent, {
         headers: {
           'Content-Type': 'application/json',
           'x-auth-token': token,
@@ -48,60 +69,70 @@ const Calendar = () =>{
   
       if (responseAddEvent.status === 200) {
         console.log(responseAddEvent.data);
+        // Show a web notification
+      window.alert('Event added successfully');
+
+      // Close the Add Event modal
+      closeAddEventModal();
       } else {
-        console.error('Error fetching user data');
+        console.error('Error fetching event data');
       }
     } catch (error) {
-      console.error('Error during user data fetch:', error);
+      console.error('Error during event addition:', error);
     }
   };
 
+ 
+
   const [showAddEventModal, setShowAddEventModal] = useState(false);
+  
   
 
     useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const url = 'http://localhost:5000/api/profile/user/' + userId;
-        const response = await axios.get(url, {
-          headers: {
-            'Content-Type': 'application/json',
-            'x-auth-token': token,
-          },
-        });
 
-        if (response.status === 200) {
-          setUser(response.data);
-        } else {
-          console.error('Error fetching user data');
-        }
-      } catch (error) {
-        console.error('Error during user data fetch:', error);
-      }
+        
+          const fetchUserData = async () => {
+            try {
+              const url = 'http://localhost:5000/api/profile/user/' + userId;
+              const response = await axios.get(url, {
+                headers: {
+                  'Content-Type': 'application/json',
+                  'x-auth-token': token,
+                },
+              });
+        
+              if (response.status === 200) {
+                setUser(response.data);
+              } else {
+                console.error('Error fetching user data');
+              }
+            } catch (error) {
+              console.error('Error during user data fetch:', error);
+            }
+        
+          };
+          const fetchCalendarData = async () => {
+            try {
+              const url = 'http://localhost:5000/api/profile/CalendarEvent';
+              const responseEvents = await axios.get(url, {
+                headers: {
+                  'Content-Type': 'application/json',
+                  'x-auth-token': token,
+                },
+              });
+        
+              if (responseEvents.status === 200) {
+                console.log(responseEvents.data);
+              } else {
+                console.error('Error fetching user data');
+              }
+            } catch (error) {
+              console.error('Error during user data fetch:', error);
+            }
+        
+          }
 
-    };
-    const fetchCalendarData = async () => {
-      try {
-        const url = 'http://localhost:5000/api/profile/CalendarEvent';
-        const responseEvents = await axios.get(url, {
-          headers: {
-            'Content-Type': 'application/json',
-            'x-auth-token': token,
-          },
-        });
-
-        if (responseEvents.status === 200) {
-          console.log(responseEvents.data);
-        } else {
-          console.error('Error fetching user data');
-        }
-      } catch (error) {
-        console.error('Error during user data fetch:', error);
-      }
-
-    }
-   
-  
+         
 
 
 
@@ -128,26 +159,57 @@ const Calendar = () =>{
 
     // }
 
-
-
-
-  
-
     fetchUserData();
     fetchCalendarData();
 
-  }, 
-  []);
+  }, []);
+
 
   if (!user) {
     return <div>Loading...</div>;
   }
+
+  
+
+  
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setNewEvent({
-      ...newEvent,
-      [name]: value
-    });
+
+    if (name === 'start_time') {
+      setNewEvent((prevEvent) => ({
+        ...prevEvent,
+        [name]: value,
+        start_time: combineTimeAndAmPm(value, prevEvent.start_am_pm),
+        
+      }));
+      setSelectedStartTime(value);
+    } else if (name === 'start_am_pm') {
+      setNewEvent((prevEvent) => ({
+        ...prevEvent,
+        [name]: value,
+        start_time: combineTimeAndAmPm(prevEvent.start_time, value),
+      }));
+      setSelectedStartAmPm(value);
+    } else if (name === 'end_time') {
+      setNewEvent((prevEvent) => ({
+        ...prevEvent,
+        [name]: value,
+        end_time: combineTimeAndAmPm(value, prevEvent.end_am_pm),
+      }));
+      setSelectedEndTime(value);
+    } else if (name === 'end_am_pm') {
+      setNewEvent((prevEvent) => ({
+        ...prevEvent,
+        [name]: value,
+        end_time: combineTimeAndAmPm(prevEvent.end_time, value),
+      }));
+      setSelectedEndAmPm(value);
+    } else {
+      setNewEvent({
+        ...newEvent,
+        [name]: value,
+      });
+    }
   };
 
 
@@ -163,11 +225,24 @@ const Calendar = () =>{
       title: "",
       start: "",
       end: "",
-      time: "",
+      start_time: "",
+      end_time: "",
       description: ""
     });
   };
+  const combineTimeAndAmPm = (time, amPm) => {
+    // Assuming time is in the format 'HH:mm'
+    const [hours, minutes] = time.split(':');
+    let combinedTime = `${hours}:${minutes}`;
   
+    if (amPm === 'PM') {
+      // Add 12 hours if PM is selected
+      const militaryHours = parseInt(hours, 10) + 12;
+      combinedTime = `${militaryHours}:${minutes}`;
+    }
+  
+    return combinedTime;
+  };
 
     const handleCalendar = () => {
       window.location.href = `/calendar?token=${token}&userId=${userId}`;
@@ -300,6 +375,7 @@ const renderCalendarGrid = () => {
           placeholder="Tell us more about this event"
           style={{ height: '100px' }} // Increased height
         />
+
 
 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
           <div style={{ flexBasis: '48%' }}>

@@ -181,6 +181,15 @@ body {
   position: relative;
   z-index: 2;
 }
+/* Close Button Styles */
+.close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 20px;
+  cursor: pointer;
+}
+
 
 
 .add-event-modal form {
