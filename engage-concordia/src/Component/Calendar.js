@@ -15,6 +15,7 @@ const Calendar = () =>{
   const [hasError, setHasError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("")
   const [eventId, setEventId] = useState(null);
+  const [currentDate, setCurrentDate] = useState(new Date());
   const [newEvent, setNewEvent] = useState({
     title: "",
     start: "",
@@ -188,7 +189,7 @@ const Calendar = () =>{
 
 
     const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September","October", "November", "December"];
-    var currentDate = new Date();
+    //var currentDate = new Date();
     var year = currentDate.getFullYear();
     var month = currentDate.getMonth();
  
@@ -196,26 +197,17 @@ const Calendar = () =>{
     const daysInMonth = new Date(year, month + 1, 0).getDate();
   const firstDayOfMonth = new Date(year, month, 1).getDay();
 
-  const handleNextMonth = (e) => {
-      const newDate = currentDate.getMonth() + 1;
-      currentDate.setMonth(newDate)  
-    year = currentDate.getFullYear();
-      month = currentDate.getMonth();
-   
-      currentMonth = monthNames[month] +" "+ year;
-      console.log(currentMonth);
-     }
-
+  const handleNextMonth = () => {
+    const newDate = new Date(currentDate);
+    newDate.setMonth(newDate.getMonth() + 1);
+    setCurrentDate(newDate);
+  };
+  
   const handlePrevMonth = () => {
-    const newDate = currentDate.getMonth() - 1;
-    currentDate.setMonth(newDate)  
-    year = currentDate.getFullYear();
-    month = currentDate.getMonth();
- 
-    currentMonth = monthNames[month] +" "+ year;
-    console.log(currentMonth);
-  }
-
+    const newDate = new Date(currentDate);
+    newDate.setMonth(newDate.getMonth() - 1);
+    setCurrentDate(newDate);
+  };
 const renderCalendarGrid = () => {
   const grid = [];
   const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
