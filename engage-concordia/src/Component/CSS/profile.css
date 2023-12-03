@@ -1,4 +1,6 @@
-
+body{
+  overflow: hidden;
+}
 .profile-page {
     background-color: #ffffff;
     height: 960px;
@@ -332,14 +334,6 @@
     width: 706px;
   }
   
-  /* .profile-page .scrolling {
-    height: 553px;
-    left: 763px;
-    position: absolute;
-    top: 31px;
-    width: 6px;
-  } */
-  
   .profile-page .my-events-header .label {
     height: 53px;
     width: 162px;
@@ -480,7 +474,7 @@
     align-items: center; /* Center the content vertically */
     top:625px;
     left: 74px;
-    position: fixed;
+    position: absolute;
   }
   
   .btn-log-out .logout-button-text {
