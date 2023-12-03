@@ -4,7 +4,6 @@
     height: 960px;
     max-width: 100%; /* Set maximum width to the width of the viewport */
     position: relative;
-    width: 1440px;
   }
     
   .profile-page .header-instance {
@@ -333,13 +332,13 @@
     width: 706px;
   }
   
-  .profile-page .scrolling {
+  /* .profile-page .scrolling {
     height: 553px;
     left: 763px;
     position: absolute;
     top: 31px;
     width: 6px;
-  }
+  } */
   
   .profile-page .my-events-header .label {
     height: 53px;
@@ -520,6 +519,79 @@
     cursor: pointer;
   }
 
+
+
+  .Navbar-container{
+    display: inline-flex;
+    justify-content: space-between;
+    width:100%;
+    height: 80px;
+    
+    background-color: #912338;
+  
+    font-family: 'Inter', sans-serif;
+    font-size: 32px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 140.625%; /* 45px */ 
+    color: #fff;
+  }
+  
+  .app-name{
+    position: relative;
+    top: 28px; 
+    left: -77px;
+  }
+  
+  button{
+    background-color: transparent;
+    background-repeat: no-repeat;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    margin: 0;
+    padding:0;
+  }
+  
+  .calendar-button-text {
+    position:relative;
+    padding: 0;
+    margin: 0;
+    left: 70px;
+    top: 8px; 
+  }
+  
+  .profile-button-container{
+    display: inline-flex;
+    margin-top: 20px;
+  }
+  .profile-button-text{
+    
+    position: absolute;
+    top: 12px; 
+    right: 70px;
+    
+  }
+  
+  .profile-button-text,.calendar-button-text{
+    font-family: 'Inter', sans-serif;
+    font-size: 26px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal; 
+    color: #fff;
+  }
+  
+  img{
+    position: absolute;
+    border-radius: 100%;
+    width: 56px;
+    height: 56px;
+    size: 56px;
+    top: 2px;
+    right: 7px;
+    
+  }
 
   :root {
     --button-text-font-family: "Inter-Bold", Helvetica;

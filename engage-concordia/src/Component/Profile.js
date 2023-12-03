@@ -5,7 +5,6 @@ import SendUnclickedIcon from './CSS/images/send_unclicked.svg';
 
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import Navbar from './Navbar';
 import { useLocation } from 'react-router-dom';
 
 import './CSS/profile.css';  // Import the CSS file directly
@@ -43,6 +42,8 @@ export const ChatBox = ({ onClose }) => {
   );
 };
 
+
+
 const Header = () => null;
 
 const Profile = () => {
@@ -54,6 +55,18 @@ const Profile = () => {
   const token = params.get('token');
   const userId = params.get('userId');
 
+const handleCalendar = () => {
+  window.location.href = `/calendar?token=${token}&userId=${userId}`;
+  console.log('Going to Calendar Page');
+};
+const handleProfile = () => {
+  window.location.href = `/profile?token=${token}&userId=${userId}`;
+  console.log('Going to Profile Page');
+};
+
+
+
+
   const handleChatClick = () => {
     setBoxVisible((prev) => !prev);
   };
@@ -62,17 +75,13 @@ const Profile = () => {
     setBoxVisible(false);
   };
 
-
-
-
   const handleLogout = () => {
     localStorage.setItem('token', '');
     localStorage.setItem('userId', '');
     window.location.href = '/login';
     console.log('Logging out');
   };
-
-
+ 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
@@ -114,8 +123,20 @@ var styling = require('./CSS/profile.css');
   <div className="profile-page">
      <title>Your Profile - Engage Concordia</title>
       <link rel="stylesheet" type="text/css" href={styling}></link>
-      <Navbar />
+
       <Header className="header-instance" ellipse="image.png" />
+      <div>
+      <div className='Navbar-container'>
+        <button className="calendar-button-container" type="button" onClick={handleCalendar}>
+          <div className="calendar-button-text">My Calendar</div>
+        </button>
+        <div className="app-name">Engage Concordia</div>
+        <button className="profile-button-container" type="button" onClick={handleProfile}>
+          <div className="profile-button-text">{user.user.name}</div>
+          <img className="profile-pic" src={profilePic} alt="Profile Picture" />
+        </button>
+      </div>
+    </div>
       <div className="my-events">
         <div className="my-event">
           <div className="group-wrapper">
@@ -197,7 +218,6 @@ var styling = require('./CSS/profile.css');
             </div>
           </div>
         </div>
-        <img className="scrolling" alt="Scrolling" src="scrolling.png" />
       </div>
       <div className="my-events-header">
         <div className="text-wrapper-9 ">My Events</div>
