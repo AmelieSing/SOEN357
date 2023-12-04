@@ -151,13 +151,19 @@ body {
 }
 
 .details-container{
+  color: black;
+  font-size: 18px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  line-height: 25.31px;
+  word-wrap: break-word;
   z-index: 1;
   background-color: #FFF;
-  align-self: center middle;
   margin-top: 5%;
   margin-left: 10%;
   width: 80%;
   height: 80%;
+  overflow-y: auto;
 }
 
 
@@ -441,3 +447,4 @@ img{
   right: 7px;
   
 }
+
