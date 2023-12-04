@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import profilePic from './CSS/images/profile_pic.jpg';
-
+import FunctNotAVL from './ModalFunctNotAVL';
 
 
 const Calendar = () =>{
@@ -88,6 +88,7 @@ const Calendar = () =>{
  
 
   const [showAddEventModal, setShowAddEventModal] = useState(false);
+  const [showDayDetailsModal, setShowDayDetailsModal] = useState(false);
   const [createdEvents, setCreatedEvents] = useState([]);
   const [sharedEvents, setSharedEvents] = useState([]);
   
@@ -274,7 +275,7 @@ const Calendar = () =>{
           const eventDate = eventDateExtraction.substring(eventDateExtraction.length-1,eventDateExtraction.lastIndexOf("-")+1)
 
           if(Number(eventDate) === day){
-            sharedEventsTitles.push(event.title);
+            sharedEventsTitles.push('<div>'+event.title+'</div>');
           }
 
         } 
@@ -298,7 +299,7 @@ const Calendar = () =>{
           const eventDate = eventDateExtraction.substring(eventDateExtraction.length-1,eventDateExtraction.lastIndexOf("-")+1)
 
           if(Number(eventDate) === day){
-            createdEventsTitles.push(event.title);
+            createdEventsTitles.push('<div>'+event.title+'</div>');
           }
         }
       }
@@ -306,35 +307,32 @@ const Calendar = () =>{
    
 
 
-    var createdEventExists = false;
-    var sharedEventExists = false;
-
+ 
+   const eventsCreated = createdEventsTitles.toString().replace(","," ");
+   const eventsShared = sharedEventsTitles.toString().replace(","," ");
+  
     grid.push(
-      <div key={day} className="calendar-cell">
-        <div className = "cell-content">
+      <div key={day} className="calendar-cell"  >
+        <div className = "cell-content" >
 
+
+        <button ></button>
         {day}
         {/* You can add event markers or details here */}
-        <div className = "createdEvents" >
-          {createdEventsTitles.toString().replace(",","\n")}
+        <div className = "createdEvents">
+        <div dangerouslySetInnerHTML={{ __html: eventsCreated }} />
         </div>   
 
-        <if sharedEventExists> 
+        
         <div className = "sharedEvents" >
-          {sharedEventsTitles.toString().replace(",","\n")}
+        <div dangerouslySetInnerHTML={{ __html: eventsShared }} />
         </div>
-        </if>  
+        
 
-      </div>
+       </div>
       </div>
     );
-
-    // var html = "";
-    // for(var i = 0; i < createdEventsTitles.length; i++){
-    //   html += '<div className="createdEvent">' + createdEventsTitles[i] + '</div>'
-    // }
-    // document.getElementById("createID").innerHTML += html;
-
+   
    
 
   }
@@ -343,11 +341,40 @@ const Calendar = () =>{
 
   return grid;
 };
+
+
+//Modals for missing functionalities
+// Open day details
+const modal1 = document.querySelector("#detailsModal");
+const openModal1 = document.querySelector("#openDetailsModal");
+const closeModal1 = document.querySelector("#closeDetailsModal");
+
+if (modal1) {
+  openModal1 &&
+    openModal1.addEventListener("click", () => modal1.showModal());
+
+  closeModal1 &&
+    closeModal1.addEventListener("click", () => modal1.close());
+}
+
+// Date Selection details
+const modal2 = document.querySelector("#slctDateModal");
+const openModal2 = document.querySelector("#openSlctDateModal");
+const closeModal2 = document.querySelector("#closeSlctDateModal");
+
+if (modal2) {
+  openModal2 &&
+    openModal2.addEventListener("click", () => modal2.showModal());
+
+  closeModal2 &&
+    closeModal2.addEventListener("click", () => modal2.close());
+}
  
   var styling =require('./CSS/calendar.css');
 
   return (
     <div>
+      <title />
       <link rel="stylesheet" type="text/css" href={styling}></link>
       <div className='Navbar-container'>
         <button className="calendar-button-container" type="button" onClick={handleCalendar}>
@@ -367,7 +394,7 @@ const Calendar = () =>{
                 <path fill-rule="evenodd" clip-rule="evenodd" d="M26.9508 32.5758C26.2186 33.3081 25.0314 33.3081 24.2992 32.5758L13.0492 21.3258C12.3169 20.5936 12.3169 19.4064 13.0492 18.6742L24.2992 7.42418C25.0314 6.69194 26.2186 6.69194 26.9508 7.42418C27.6831 8.15641 27.6831 9.34359 26.9508 10.0758L17.0267 20L26.9508 29.9242C27.6831 30.6564 27.6831 31.8436 26.9508 32.5758Z" fill="#1F1F1F" stroke="black" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
             </button>
-            <div className="current-month">{currentMonth}</div>
+            <div className="current-month" id="openSlctDateModal">{currentMonth}</div>
             <button className="next-month" type="button" onClick={handleNextMonth}>
               <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path fill-rule="evenodd" clip-rule="evenodd" d="M13.0492 7.42417C13.7814 6.69194 14.9686 6.69194 15.7008 7.42417L26.9508 18.6742C27.6831 19.4064 27.6831 20.5936 26.9508 21.3258L15.7008 32.5758C14.9686 33.3081 13.7814 33.3081 13.0492 32.5758C12.3169 31.8436 12.3169 30.6564 13.0492 29.9242L22.9733 20L13.0492 10.0758C12.3169 9.34359 12.3169 8.15641 13.0492 7.42417Z" fill="#1F1F1F" stroke="black" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
@@ -383,9 +410,9 @@ const Calendar = () =>{
         </div>
         <div className="calendar-container">
 
-          <div className="weekday-labels">
+          <div className="weekday-labels" id="openDetailsModal">
           
-             <div className="calendar-grid">{renderCalendarGrid()}</div>
+             <div className="calendar-grid" type="button" >{renderCalendarGrid()}</div>
           </div>
             <div className="weekday-label-grid">
               <div className="day-label">Sunday</div>
@@ -506,6 +533,21 @@ const Calendar = () =>{
     </div>
   </div>
 )}
+{/* Modals for missing functionalities */}
+<dialog className='modalDetails' id="detailsModal">
+  <div className='details-container'>
+  <button id="closeDetailsModal">X</button>
+  <div className="example-caution">*This is only an example, this is not using real data from the server.*</div>             
+  
+  </div>
+  
+</dialog>
+
+<dialog className='modal' id="slctDateModal">
+  <p>The functionality to be able to select a date from a more indepth calendar isn't available in this prototype.</p>
+  <button id="closeSlctDateModal">Close</button>
+</dialog>
+
     </div>
   );
 };

@@ -40,6 +40,7 @@ const Login = () => {
   <div className='Login_Page'>
 
     <title>Login - Engage Concordia</title>
+    
     <link rel="stylesheet" type="text/css" href={styling}></link>
     <div class="container">
         <div class="title-container">
