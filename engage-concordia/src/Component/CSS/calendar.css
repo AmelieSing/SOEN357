@@ -125,6 +125,37 @@ body {
   
 }
 
+.cell-content{
+  text-align: left;
+  margin:10px 15px;
+
+}
+
+.createdEvents{
+  background-color: #DB0272;
+}
+
+.sharedEvents{
+  background-color: #00b3a1;
+
+}
+
+.createdEvents,.sharedEvents{
+  margin: 0px;
+  margin-bottom: 4px;
+  padding-left: 5px;
+  border-radius: 3px;
+  white-space: pre-wrap;
+  color: #FFF;
+/* Tiny */
+font-family: 'Inter', sans-serif;
+font-size: 12px;
+font-style: normal;
+font-weight: 400;
+line-height: 20px; 
+width: 200px;
+}
+
 .calendar-cell:hover {
   background-color: #ddd;
 }
@@ -159,6 +190,13 @@ body {
   font-weight: 700;
   line-height: normal;
 }
+
+li{
+  text-align: left;
+  background-color: #0056b3;
+  list-style-type: none;
+}
+
 .add-event-modal {
   position: fixed;
   z-index: 1;

@@ -254,12 +254,11 @@ const Calendar = () =>{
   // Add cells for each day of the month
   for (let day = 1; day <= daysInMonth; day++) {
   
-  
     var sharedEventsTitles = [];
-    var createdEventsTitles = [];
-    for(let event of sharedEvents){
+  var createdEventsTitles = [];
 
-  
+
+    for(let event of sharedEvents){
 
       const eventStartDate = event.start;
       const eventDateExtraction = eventStartDate.substring(0, eventStartDate.indexOf("T"));
@@ -275,12 +274,14 @@ const Calendar = () =>{
           const eventDate = eventDateExtraction.substring(eventDateExtraction.length-1,eventDateExtraction.lastIndexOf("-")+1)
 
           if(Number(eventDate) === day){
-            console.log("Add event")
             sharedEventsTitles.push(event.title);
           }
-        }
-      }
+
+        } 
+      } 
     }
+
+
 
     for(let event of createdEvents){
       const eventStartDate = event.start;
@@ -297,25 +298,48 @@ const Calendar = () =>{
           const eventDate = eventDateExtraction.substring(eventDateExtraction.length-1,eventDateExtraction.lastIndexOf("-")+1)
 
           if(Number(eventDate) === day){
-            console.log("Add event")
             createdEventsTitles.push(event.title);
           }
         }
       }
     }
+   
 
-    
+
+    var createdEventExists = false;
+    var sharedEventExists = false;
 
     grid.push(
       <div key={day} className="calendar-cell">
+        <div className = "cell-content">
+
         {day}
         {/* You can add event markers or details here */}
-        {createdEventsTitles}
-        {sharedEventsTitles}
-        
+        <div className = "createdEvents" >
+          {createdEventsTitles.toString().replace(",","\n")}
+        </div>   
+
+        <if sharedEventExists> 
+        <div className = "sharedEvents" >
+          {sharedEventsTitles.toString().replace(",","\n")}
+        </div>
+        </if>  
+
+      </div>
       </div>
     );
+
+    // var html = "";
+    // for(var i = 0; i < createdEventsTitles.length; i++){
+    //   html += '<div className="createdEvent">' + createdEventsTitles[i] + '</div>'
+    // }
+    // document.getElementById("createID").innerHTML += html;
+
+   
+
   }
+
+
 
   return grid;
 };
