@@ -1,149 +1,450 @@
-body{
-    overflow: hidden;
-}
-.Calendar-Page{
-    background-color:#C8C8C8;
-    height: 100%;
-
+body {
+  overflow: hidden;
 }
 
-.navigation-container{
-    display: flex;
-    justify-content: space-between;
-
+.Calendar-Page {
+  background-color: #C8C8C8;
+  height: 100%;
 }
 
-.select-date-container{
-    position: relative;
-    display: flex;
-    margin-left: 66px;
-    margin-top: 26px;
+.navigation-container {
+  display: flex;
+  justify-content: space-between;
 }
 
-.last-month{
-   
-}
-.current-month{
-    color: #000;
-
-    /* Headline 2 */
-    font-family: 'Inter', sans-serif;
-    font-size: 40px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: normal;
-}
-.next-month{
-    
+.select-date-container {
+  position: relative;
+  display: flex;
+  margin-left: 66px;
+  margin-top: 26px;
 }
 
-.calendar-container{
-    position: relative;
-    border-top-left-radius: 20px;
-    border-top-right-radius: 20px;
-    background-color: #F0F0F0;
-    margin-top:32px; 
-    height: 776px;
+.last-month {}
+
+.current-month {
+  color: #000;
+  /* Headline 2 */
+  font-family: 'Inter', sans-serif;
+  font-size: 40px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
 }
 
-.add-event-container{
-    position: relative;
-    display:flex;
-    width: 192px;
-    height: 43px;
-    background-color: #912338;
-    border-radius: 5px;
-    margin-top: 29px;
-    margin-right: 66px;
-    padding-top: 10px;
-    padding-right:px;
-}
+.next-month {}
 
-.add-event-text{
-    width: 122px;
-    height: 43px;   
-    margin-top: -2px;
-    padding-left: 19px;
-    color: #FFF;
-    font-family: 'Inter', sans-serif;
-    font-size: 22px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: normal; 
-}
-
-.plus-sign{
-    padding-left: 12px;
-    padding:0px;
-    margin:0px;
-}
-.Navbar-container{
-    display: inline-flex;
-    justify-content: space-between;
-    width:100%;
-    height: 80px;
-    
-    background-color: #912338;
+.calendar-container {
   
-    font-family: 'Inter', sans-serif;
-    font-size: 32px;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  background-color: #f0f0f0;
+  margin-top: 32px;
+  height: 776px;
+  /* Add the new styles for the calendar grid */
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 8px;
+  overflow-y: auto;
+  width: 1920px;
+
+}
+
+.calendar-grid{
+  display: grid;
+  grid-template-columns: repeat(7, minmax(200px, 1fr));
+  padding-top: 55px;
+  padding-left: 55px;
+  padding-right: 55px;
+  padding-bottom: 76px;
+}
+
+.weekday-labels {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  justify-content: space-around;
+
+  background-color: #e0e0e0;
+  height: 28px;
+  width: 1920px;
+
+}
+
+.weekday-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: #333;
+  visibility: hidden;
+}
+
+
+
+.weekday-label-grid {
+  position: fixed;
+  display: flex;
+  font-family: 'Inter', sans-serif;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 140.625%; /* 33.75px */ 
+  color: #000000;
+  height: 34px;
+  width:95%;
+  left:0px;
+  background-color: #F0F0F0;
+  text-align: center;
+  padding-left: 42px;
+  padding-right: 55px;
+  padding-top: 21px;
+}
+
+.day-label{
+  width: 246px;
+  height: 34px;
+
+  margin-left: 13px;
+}
+
+.calendar-cell {
+  display: flex;
+  align-items: left top;
+ 
+  width: 95%;
+  height: 136px; 
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+  background-color: #fff;
+  margin-bottom: 10px;
+  color: #000;
+  text-align: center;
+  font-family: 'Inter', sans-serif;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 140.6%; /* 25.308px */ 
+  
+}
+
+.cell-content{
+  text-align: left;
+  margin:10px 15px;
+
+}
+
+.createdEvents{
+  background-color: #DB0272;
+}
+
+.sharedEvents{
+  background-color: #00b3a1;
+
+}
+
+.modal{
+  position:absolute;
+}
+
+.modalDetails{
+  background-color: rgba(0, 0, 0, 0.4);
+  width: 100%;
+  height: 100%;
+}
+
+.details-container{
+  color: black;
+  font-size: 18px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  line-height: 25.31px;
+  word-wrap: break-word;
+  z-index: 1;
+  background-color: #FFF;
+  margin-top: 5%;
+  margin-left: 10%;
+  width: 80%;
+  height: 80%;
+  overflow-y: auto;
+}
+
+
+
+.sharedEvents,.createdEvents{
+
+  margin: 4px 0px;
+
+  padding-left: 5px;
+  border-radius: 3px;
+  white-space: pre-wrap;
+  color: #FFF;
+/* Tiny */
+font-family: 'Inter', sans-serif;
+font-size: 12px;
+font-style: normal;
+font-weight: 400;
+line-height: 20px; 
+width: 200px;
+}
+
+/* .createdEvents:hover{
+background-color: #fff;
+} */
+
+.calendar-cell:hover {
+  background-color: #ddd;
+}
+
+.empty-cell {
+  width: 190px;
+  height: 136px; 
+}
+
+.add-event-container {
+  position: relative;
+  display: flex;
+  width: 192px;
+  height: 43px;
+  background-color: #912338;
+  border-radius: 5px;
+  margin-top: 29px;
+  margin-right: 66px;
+  padding-top: 10px;
+  padding-right: px;
+}
+
+.add-event-text {
+  width: 122px;
+  height: 43px;
+  margin-top: -2px;
+  padding-left: 19px;
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  font-size: 22px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+li{
+  text-align: left;
+  background-color: #0056b3;
+  list-style-type: none;
+}
+
+.add-event-modal {
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  padding: 120px 75px 80px 75px ;
+  width: 93%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+  visibility: visible; /* Add this */
+
+  font-family: 'Inter', sans-serif;
+  font-size: 22px;
   font-style: normal;
   font-weight: 700;
   line-height: 140.625%; /* 45px */ 
-    color: #fff;
-  }
+}
+
+input{
+  color: rgba(0, 0, 0, 1); 
+  font-family: 'Inter', sans-serif;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 140.625%; /* 33.75px */ 
+}
+
+input::placeholder{
+  color: rgba(110, 110, 110, 0.55); 
+}
+
+
+select{
+  color: rgba(0, 0, 0, 1); 
+  font-family: 'Inter', sans-serif;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 140.625%; /* 33.75px */ 
+}
+
+select::placeholder{
+  color: rgba(110, 110, 110, 0.55); 
+}
+
+.add-event-modal.popup-background {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(8px); /* Add a blur effect to the background */
+}
+
+.add-event-modal.popup-background:before {
+  content: "";
+  position: absolute;
+  width: 1290px;
+  height: 696px;
+  border-radius: 20px;
+  background-color: #fff; /* White background color */
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: -1; /* Behind the modal content, adjust if needed */
+}
+
+.add-event-modal.modal-content {
+  background-color: #fff; /* White background color */
+  margin: 10% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 60%; /* Adjust the width as needed */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add a subtle box shadow */
+  position: relative;
+  z-index: 2;
+}
+/* Close Button Styles */
+.close {
+  position: absolute;
+  font-size: 30px;
+  margin-top: 10px;
+  margin-left: 1750px;
+  cursor: pointer;
+
   
-  .app-name{
-    position: relative;
-    top: 28px; 
-    left: -77px;
-  }
+}
+.close:hover{
+  color:#912338;
+}
+
+
+.add-event-modal form {
+  background-color: #fff; /* White background color for the form */
+  padding: 20px; /* Adjust padding as needed */
+  border-radius: 10px; /* Adjust border radius as needed */
+}
+
+.add-event-modal form label {
+  display: block;
+  margin-bottom: 8px;
+}
+
+.add-event-modal form input,
+.add-event-modal form textarea {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 16px;
+  border: 1px solid #ccc; /* Add border color */
+  border-radius: 4px; /* Adjust border radius as needed */
+}
+
+.add-event-modal form button {
+  background-color: #912338; /* Adjust button background color */
+  color: #fff;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.add-event-modal button:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+}
+.add-event-modal.error {
+  border: 2px solid #ff0000; /* Red border for error */
+}
+
+.add-event-modal .error-message {
+  color: #ff0000; /* Red color for error text */
+  font-size: 14px;
+  margin-top: 8px;
+}
+.plus-sign {
+  padding-left: 12px;
+  padding: 0px;
+  margin: 0px;
+}
+
+.Navbar-container{
+  display: inline-flex;
+  justify-content: space-between;
+  width:100%;
+  height: 80px;
   
-  button{
-    background-color: transparent;
-    background-repeat: no-repeat;
-    border: none;
-    cursor: pointer;
-    outline: none;
-    margin: 0;
-    padding:0;
-  }
+  background-color: #912338;
+
+  font-family: 'Inter', sans-serif;
+  font-size: 32px;
+font-style: normal;
+font-weight: 700;
+line-height: 140.625%; /* 45px */ 
+  color: #fff;
+}
+
+.app-name{
+  position: relative;
+  margin-top:24px;
+  margin-left:0px;
+}
+
+button{
+  background-color: transparent;
+  background-repeat: no-repeat;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  margin: 0;
+  padding:0;
+}
+
+.calendar-button-text {
+  position:relative;
+  padding: 0;
+  margin: 0;
+  left: 70px;
+  top: 8px; 
+}
+
+.profile-button-container{
+  display: inline-flex;
+  position: relative;
+  margin-top: 20px;
+}
+.profile-button-text{
   
-  .calendar-button-text {
-    position:relative;
-    padding: 0;
-    margin: 0;
-    left: 70px;
-    top: 8px; 
-  }
+  position: relative;
+  margin-right: 75px;
+  margin-top: 12px;
+  width: 100%;
   
-  .profile-button-container{
-    display: inline-flex;
-  }
-  .profile-button-text{
-    
-    position: absolute;
-    top: 12px; 
-    right: 70px;
-    
-  }
+}
+
+.profile-button-text,.calendar-button-text{
+  font-family: 'Inter', sans-serif;
+  font-size: 26px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal; 
+  color: #fff;
+}
+
+img{
+  position: absolute;
+  border-radius: 100%;
+  width: 56px;
+  height: 56px;
+  size: 56px;
+  top: 2px;
+  right: 7px;
   
-  .profile-button-text,.calendar-button-text{
-    font-family: 'Inter', sans-serif;
-    font-size: 26px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: normal; 
-    color: #fff;
-  }
-  
-  img{
-    position: absolute;
-    border-radius: 100%;
-    width: 56px;
-    height: 56px;
-    size: 56px;
-    top: 2px;
-    right: 7px;
-    
-  }
+}
+

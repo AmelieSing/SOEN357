@@ -21,12 +21,15 @@ body{
     background-color: #f0f0f0; /* Remove or adjust styling */
     border-radius: 10px; /* Remove or adjust styling */
     box-shadow: 0px 4px 4px #00000040; /* Remove or adjust styling */
-    height: 653px; /* Remove or adjust styling */
-    left: 571px; /* Remove or adjust styling */
-    position: absolute; /* Remove or adjust styling */
-    top: 227px; /* Remove or adjust styling */
-    width: 792px; /* Remove or adjust styling */
-    overflow-y: auto; /* Add this to make it scrollable */
+    height: 104.98%; /* Remove or adjust styling */
+    position: relative;
+    width: 40.57%; /* Remove or adjust styling */
+    overflow: scroll;
+    margin-top: 147px;
+   margin-left: 571px;
+    padding-left: 32px;
+    padding-top: 32px;
+    padding-bottom: 32px;
   }
   
   .profile-page .group-wrapper {
@@ -45,14 +48,15 @@ body{
     left: 0;
     position: absolute;
     top: 0;
+   
     width: 708px;
   }
   
   .profile-page .event-details {
     height: 120px;
     left: 0;
-    position: absolute;
-    top: 79px;
+    position: relative;
+    margin-top: 59px;
     width: 677px;
   }
   
@@ -120,9 +124,8 @@ body{
   }
   .chat-unclicked .vector {
     height: 24px;
-    left: -29px;
-    position: absolute;
-    top: -4px;
+    margin-left: 10px;
+    position: relative;
     width: 20px;
     }
   
@@ -133,10 +136,14 @@ body{
     display: inline-block; }
 .send-unclicked .vector {
     height: 24px;
-    left: -25px;
-    position: absolute;
-    top: -4px;
+    margin-left: 20px;
+    position: relative;
+
     width: 60px;
+  }
+
+  .vector:active{
+    color:#912338;
   }
   
   .profile-page .event-description {
@@ -215,7 +222,7 @@ body{
     font-size: var(--p-large-bold-font-size);
     font-style: var(--p-large-bold-font-style);
     font-weight: var(--p-large-bold-font-weight);
-    height: 71px;
+    height: 60px;
     left: 0;
     letter-spacing: var(--p-large-bold-letter-spacing);
     line-height: var(--p-large-bold-line-height);
@@ -230,7 +237,7 @@ body{
     height: 208px;
     left: 0;
     position: absolute;
-    top: 215px;
+     margin-top: 180px;
     width: 706px;
   }
   
@@ -317,7 +324,7 @@ body{
     font-family: "Inter-Bold", Helvetica;
     font-size: 24px;
     font-weight: 700;
-    height: 71px;
+    height: 60px;
     left: 0;
     letter-spacing: 0;
     line-height: 33.8px;
@@ -533,8 +540,8 @@ body{
   
   .app-name{
     position: relative;
-    top: 28px; 
-    left: -77px;
+    margin-top:24px;
+    margin-left:0px;
   }
   
   button{
@@ -557,13 +564,15 @@ body{
   
   .profile-button-container{
     display: inline-flex;
+    position: relative;
     margin-top: 20px;
   }
   .profile-button-text{
     
-    position: absolute;
-    top: 12px; 
-    right: 70px;
+    position: relative;
+    margin-right: 75px;
+    margin-top: 12px;
+    width: 100%;
     
   }
   

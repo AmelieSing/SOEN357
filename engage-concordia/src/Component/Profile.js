@@ -196,6 +196,7 @@ var styling = require('./CSS/profile.css');
                       <SendUnclicked variant="filled" />
                     </div>
                     {popupVisible && <ChatBox onClose={closePopup} />} {/* Add this line */}
+                    
                   </div>
                   <p className="p">
                     We&#39;ll be having a snack table, lots of fun Christmas themed activities, Storytime provided by
