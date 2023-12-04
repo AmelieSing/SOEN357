@@ -3,7 +3,6 @@ import { useLocation } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import profilePic from './CSS/images/profile_pic.jpg';
-import FunctNotAVL from './ModalFunctNotAVL';
 
 
 const Calendar = () =>{
@@ -14,7 +13,7 @@ const Calendar = () =>{
   const [user, setUser] = useState(null);
   const [hasError, setHasError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("")
-  const [eventId, setEventId] = useState(null);
+
   const [currentDate, setCurrentDate] = useState(new Date());
   const [newEvent, setNewEvent] = useState({
     title: "",
@@ -24,11 +23,6 @@ const Calendar = () =>{
     end_time: "",
     description: ""
   });
-
-  const [selectedStartTime, setSelectedStartTime] = useState(newEvent.start_time);
-  const [selectedStartAmPm, setSelectedStartAmPm] = useState(newEvent.start_am_pm);
-  const [selectedEndTime, setSelectedEndTime] = useState(newEvent.end_time);
-  const [selectedEndAmPm, setSelectedEndAmPm] = useState(newEvent.end_am_pm);
 
 
   const addEvent = async () => {
@@ -40,7 +34,7 @@ const Calendar = () =>{
       const endDate = newEvent.end;
       const startTime = newEvent.start_time;
       const endTime = newEvent.end_time;
-      if (endDate <= startDate) {
+      if (endDate < startDate && endTime < startTime) {
         // Set error message
         setErrorMessage('End date and time must be after the start date and time');
         window.alert('End date and time must be after the start date and time.');
@@ -143,14 +137,15 @@ const Calendar = () =>{
     fetchUserData();
     fetchCalendarData();
 
-  }, []);
+  }, [createdEvents, sharedEvents, token, userId]);
+
 
 
   if (!user) {
     return <div>Loading...</div>;
   }
 
-  
+
 
   
   const handleInputChange = (e) => {
@@ -216,6 +211,7 @@ const Calendar = () =>{
 
     // Force re-render by updating state
     setCurrentDate(newDate);
+
   };
 
   
@@ -229,6 +225,7 @@ const Calendar = () =>{
 
     // Force re-render by updating state
     setCurrentDate(newDate);
+
   };
   const renderCalendarGrid = () => {
     const grid = [];
@@ -272,7 +269,7 @@ const Calendar = () =>{
        
         if(Number(eventMonth)-1 === month){
      
-          const eventDate = eventDateExtraction.substring(eventDateExtraction.length-1,eventDateExtraction.lastIndexOf("-")+1)
+          const eventDate = eventDateExtraction.substring(eventDateExtraction.lastIndexOf("-")+1,eventDateExtraction.length)
 
           if(Number(eventDate) === day){
             sharedEventsTitles.push('<div>'+event.title+'</div>');
@@ -296,8 +293,8 @@ const Calendar = () =>{
        
         if(Number(eventMonth)-1 === month){
      
-          const eventDate = eventDateExtraction.substring(eventDateExtraction.length-1,eventDateExtraction.lastIndexOf("-")+1)
-
+          const eventDate = eventDateExtraction.substring(eventDateExtraction.lastIndexOf("-")+1,eventDateExtraction.length)
+         
           if(Number(eventDate) === day){
             createdEventsTitles.push('<div>'+event.title+'</div>');
           }
@@ -305,6 +302,7 @@ const Calendar = () =>{
       }
     }
    
+ 
 
 
  
