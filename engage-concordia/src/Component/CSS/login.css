@@ -13,7 +13,7 @@ body {
     padding-right: 653px;
     background-image: url(./images/login_background.jpg);
  
-    background-size: 60%;
+    background-size: 80%;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;

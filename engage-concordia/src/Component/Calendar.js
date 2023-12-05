@@ -5,6 +5,7 @@ import axios from 'axios';
 import profilePic from './CSS/images/profile_pic.jpg';
 import ChatUnclickedIcon from './CSS/images/chat_unclicked.svg';
 import SendUnclickedIcon from './CSS/images/send_unclicked.svg';
+import InterestIcon from './CSS/images/interest.svg';
 
 
 import './CSS/profile.css';  // Import the CSS file directly
@@ -25,6 +26,7 @@ export const SendUnclicked = ({ onShareClick }) => {
     </div>
   );
 };
+
 
 export const ChatBox = ({ onClose }) => {
   return (
@@ -412,8 +414,8 @@ if (modal2) {
   closeModal2 &&
     closeModal2.addEventListener("click", () => modal2.close());
 }
- 
-  var styling =require('./CSS/calendar.css');
+
+var styling = require('./CSS/calendar.css');
 
   return (
     <div>
@@ -584,30 +586,38 @@ if (modal2) {
   <p className="event-title-2">A Christmas Carol - a dramatic reading with musical guest</p>
               <div className="event-specific-2">
                 <div className="event-details-2">
+                <div className="left-side-col-2">
+                  <div className="status-2">
+                    <div className="text-wrapper">30 going</div>
+                    <div className="text-wrapper">5 not going</div>
+                    <div className="text-wrapper">30 interested</div>
+                  </div>
+                  <p className="description">
+                    Get ready to be swept away by the magic of the holiday season as our area&#39;s talented performers
+                    bring this timeless tale to the stage. Join us for a delightful evening of festive cheer!
+                  </p>
+                  </div>
                   <div className="right-side-col-2">
                     <div className="time">
-                      <div className="text-wrapper-3">7:00PM - 10:00PM</div>
+                      <div className="text-wrapper-2">7:00PM - 10:00PM</div>
                     </div>
                     <div className="date">December 17, 2024</div>
                     <div className="actionable-2">
                     <ChatUnclicked onChatClick={handleChatClick}/>
-                      <SendUnclicked className="send-unclicked" />
+                      <SendUnclicked className="send-unclicked" id="openSendModal"/>
+                      <div className="interest-unclicked" id="openAttendanceModal" >
+                        <img className="vector" alt="Vector" src={InterestIcon} />
+                      </div>
                     </div>
-                    {popupVisible && <ChatBox onClose={closePopup} />} {/* Add this line */}
+                    {popupVisible && <ChatBox onClose={closePopup} />} {/* Add this line */}                
+                    
                   </div>
-                  <p className="p">
-                    Get ready to be swept away by the magic of the holiday season as our area&#39;s talented performers
-                    bring this timeless tale to the stage. Join us for a delightful evening of festive cheer!
-                  </p>
-                  <div className="status-2">
-                    <div className="text-wrapper-7">30 going</div>
-                    <div className="text-wrapper-5">5 not going</div>
-                    <div className="text-wrapper-8">30 interested</div>
-                  </div>
+                 
                 </div>
                 
               </div>
-              <div className="example-caution">*This is only an example, this is not using real data from the server.*</div>             
+              <div className="example-caution">*This is only an example, this is not using real data from the server.*</div>   
+              <div className="example-caution2">*The sharing button and the attendance button aren't functional in this prototype.*</div>          
   </div>
 </dialog>
 
@@ -615,6 +625,7 @@ if (modal2) {
   <p>The functionality to be able to select a date from a more indepth calendar isn't available in this prototype.</p>
   <button id="closeSlctDateModal">Close</button>
 </dialog>
+
 
     </div>
   );

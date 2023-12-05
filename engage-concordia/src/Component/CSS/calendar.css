@@ -144,6 +144,11 @@ body {
   position:absolute;
 }
 
+.modal2{
+  position:absolute;
+  z-index: 2;
+}
+
 .modalDetails{
   background-color: rgba(0, 0, 0, 0.4);
   width: 100%;
@@ -164,8 +169,97 @@ body {
   width: 80%;
   height: 80%;
   overflow-y: auto;
+  overflow-x: hidden;
 }
 
+
+#closeDetailsModal {
+  font-family: 'Inter', sans-serif;
+  position: relative; 
+  font-size: 30px;
+  margin-top: 10px;
+ margin-left: 97%;
+  cursor: pointer;  
+  font-weight: 700;
+}
+#closeDetailsModal:hover{
+  color:#912338;
+}
+
+.status-2{
+  display: flex;
+}
+
+.description{
+  width: 470px;
+  text-justify: justify;
+}
+
+.event-details-2{
+  display: flex;
+}
+
+.event-title-2{
+  color: black;
+font-size: 24px;
+font-family: 'Inter', sans-serif;
+font-weight: 700;
+line-height: 33.75px;
+word-wrap: break-word ;
+width: 100%;
+}
+
+.text-wrapper{
+width: 166px;
+}
+
+.text-wrapper-2{
+  width: 166px;
+  margin-bottom: 10px;
+}
+
+.date{
+  margin-bottom: 10px;
+}
+
+.event-specific-2, .event-title-2{
+  margin-left: 20px;
+  margin-top: -10px;
+}
+
+.example-caution{
+  color:#912338;
+  font-size: small;
+  position: absolute;
+  margin-left: 20px;
+  margin-top: 400px;
+}
+
+.example-caution2{
+  color:#912338;
+  font-size: small;
+  position: absolute;
+  margin-left: 20px;
+  margin-top: 420px;
+}
+
+.interest-unclicked{
+  position: relative;
+  margin-top: -45px;
+  margin-left: -5px;
+}
+
+.interest-unclicked .vector{
+  filter: brightness(0%);
+  width: 30px;
+  
+}
+
+.chat-box{
+  margin-left: 400px;
+  margin-top: -250px;
+  height: 600px;
+}
 
 
 .sharedEvents,.createdEvents{
@@ -318,14 +412,11 @@ select::placeholder{
   font-size: 30px;
   margin-top: 10px;
   margin-left: 1750px;
-  cursor: pointer;
-
-  
+  cursor: pointer;  
 }
 .close:hover{
   color:#912338;
 }
-
 
 .add-event-modal form {
   background-color: #fff; /* White background color for the form */

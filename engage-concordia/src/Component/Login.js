@@ -26,7 +26,7 @@ const Login = () => {
 
 
         // Redirect to the profile page
-        window.location.href = `/profile?token=${token}&userId=${userId}`;
+        window.location.href = `/calendar?token=${token}&userId=${userId}`;
       } else {
         console.error('Login failed');
       }
