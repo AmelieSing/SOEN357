@@ -12,7 +12,7 @@ const EventSchema = new mongoose.Schema({
     required: true,
   },
   end: {
-    type: Date,
+    type: String,
     required: true,
   },
   start_time: {
@@ -55,12 +55,6 @@ const EventSchema = new mongoose.Schema({
     },
   ],
 });
-// Add a pre-save hook to format the date before saving
-EventSchema.pre('save', function (next) {
-  // Format the start and end dates to MM/DD/YYYY
-  this.start = moment(this.start).format('MM/DD/YYYY');
-  this.end = moment(this.end).format('MM/DD/YYYY');
-  next();
-});
+
 
 module.exports = CalendarEvent = mongoose.model('event', EventSchema);

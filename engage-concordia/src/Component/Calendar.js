@@ -92,15 +92,16 @@ const Calendar = () =>{
   
       const formattedEvent = {
         title: newEvent.title,
-        start:  newEvent.start,//new Date(`${newEvent.start}`).toISOString(),
-        end: newEvent.end,//new Date(`${newEvent.end}`).toISOString(),
+        start: newEvent.start, //new Date(`${newEvent.start}`).toISOString(),
+        end: newEvent.end, //new Date(`${newEvent.end}`).toISOString(),
         start_time: newEvent.start_time,
-       
         end_time: newEvent.end_time,
         description: newEvent.description,
       };
-    console.log("start time: " + newEvent.start_time);
-    console.log("end time: " + newEvent.end_time);
+      console.log("title: " + newEvent.title);
+      console.log("start date: " + newEvent.start);
+      console.log("end date: " + newEvent.end);
+    
       const url = 'http://localhost:5000/api/events';
       console.log("token: " + token);
       const responseAddEvent = await axios.post(url, formattedEvent, {
@@ -114,8 +115,9 @@ const Calendar = () =>{
         console.log(responseAddEvent.data);
         // Show a web notification
          // Close the Add Event modal
+      window.alert('Event added successfully');  
       closeAddEventModal();
-      window.alert('Event added successfully');
+      
 
      
       } else {
@@ -214,6 +216,13 @@ const Calendar = () =>{
   const closeAddEventModal = () => {
     setShowAddEventModal(false);
     // Reset the form fields when the modal is closed
+    console.log("Closing Add Event Modal");
+    console.log("title: " + newEvent.title);
+    console.log("start date: " + newEvent.start);
+    console.log("end date: " + newEvent.end);
+    console.log("start time: " + newEvent.start_time);
+    console.log("end time: " + newEvent.end_time);
+
     setNewEvent({
       title: "",
       start: "",
